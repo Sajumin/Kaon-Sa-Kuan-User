@@ -1,46 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'clickResto.dart';
-import '../../models/restaurant_data.dart';
-import '../../widgets/restaurant_card.dart';
-import '../../widgets/speech_bubble.dart';
+import 'package:kaon_sa_kuan/data/services/restaurant_service.dart';
+import 'package:kaon_sa_kuan/models/restaurant.dart';
+import 'package:kaon_sa_kuan/screens/user/user_decisions_page.dart';
+import 'package:kaon_sa_kuan/screens/user/user_resto_details.dart';
+import 'package:kaon_sa_kuan/widgets/user/user_resto_card.dart';
+import 'package:kaon_sa_kuan/widgets/user/user_speech_bubble.dart';
 
 class UserHomepage extends StatefulWidget {
   const UserHomepage({super.key});
 
- @override
+  @override
   State<UserHomepage> createState() => _UserHomepageState();
 }
+
 class _UserHomepageState extends State<UserHomepage> {
   static const themeColor = Color(0xFFF28544);
+  final RestaurantService _restaurantService = RestaurantService();
 
-   final List<RestaurantData> _restaurants = const [
-    RestaurantData(
-      id: '1',
-      name: 'Manang Betch',
-      location: 'CUB, Stall #2',
-      price: 'Php 5 – Php 100',
-      hours: '8am–5pm',
-      description: 'Your favorite homecooked meals away from home! We serve affordable, comforting dishes from breakfast to dinner.',
-      tags: ['lunch', 'chicken', 'pork'],
-    ),
-    RestaurantData(
-      id: '2',
-      name: 'Beans and Bubbles',
-      location: 'Brgy. Mat-y',
-      price: 'Php 130 – Php 250',
-      hours: '8am–3am',
-      description: 'Your favorite coffee shop place with yummy pastries.',
-      tags: ['cake', 'bread', 'coffee'],
-    ),
-  ];
-
-   void _onRestaurantTap(RestaurantData restaurant) {
-     Navigator.push(
+  void _onRestaurantTap(Restaurant restaurant) {
+    Navigator.push(
       context,
       MaterialPageRoute(
         builder: (_) => RestaurantDetailPage(restaurant: restaurant),
       ),
+    );
+  }
+
+  void _openDecisionMaker() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => const FoodDecisionMaker()),
     );
   }
 
@@ -50,114 +40,122 @@ class _UserHomepageState extends State<UserHomepage> {
       backgroundColor: Colors.white,
       body: Column(
         children: [
-          //Header 
           Container(
             color: themeColor,
             padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    // Greeting text
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Good day, kuan.',
-                            style: GoogleFonts.poppins(
-                              color: Colors.white,
-                              fontSize: 22,
-                              fontWeight: FontWeight.w700,
-                            ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Good day, kuan.',
+                          style: GoogleFonts.poppins(
+                            color: Colors.white,
+                            fontSize: 22,
+                            fontWeight: FontWeight.w700,
                           ),
-                          Text(
-                            'What are we craving today?',
-                            style: GoogleFonts.poppins(
-                              color: Colors.white,
-                              fontSize: 13,
-                              fontWeight: FontWeight.w400,
-                            ),
+                        ),
+                        Text(
+                          'What are we craving today?',
+                          style: GoogleFonts.poppins(
+                            color: Colors.white,
+                            fontSize: 13,
                           ),
-                          const SizedBox(height: 10),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    // Pig mascot
-                    Transform.translate(
-                      offset: const Offset(15, 30), // pops slightly below header
-                      child: CircleAvatar(
-                        radius: 45,
-                        backgroundColor: Colors.white.withOpacity(0.0),
-                        backgroundImage:
-                            const AssetImage('assets/images/pig_mascot.png'),
-                      ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: _openDecisionMaker,
+                  child: Transform.translate(
+                    offset: const Offset(15, 30),
+                    child: const CircleAvatar(
+                      radius: 45,
+                      backgroundColor: Colors.transparent,
+                      backgroundImage: AssetImage('assets/images/pig_mascot.png'),
                     ),
-                  ],
+                  ),
                 ),
               ],
             ),
           ),
-
-          //Body
           Expanded(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(20, 24, 20, 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: SpeechBubble(
-                      text: "can't decide where to eat? tap me for help!",
-                      themeColor: themeColor,
-                    ),
+            child: StreamBuilder<List<Restaurant>>(
+              stream: _restaurantService.getRestaurants(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                }
+
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(color: themeColor),
+                  );
+                }
+
+                final restaurants = snapshot.data ?? [];
+
+                return SingleChildScrollView(
+                  padding: const EdgeInsets.fromLTRB(20, 24, 20, 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: GestureDetector(
+                          onTap: _openDecisionMaker,
+                          child: const SpeechBubble(
+                            text: "can't decide where to eat? tap me for help!",
+                            themeColor: themeColor,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      TextField(
+                        decoration: InputDecoration(
+                          hintText: 'search for restaurant...',
+                          hintStyle: GoogleFonts.poppins(
+                            color: themeColor.withOpacity(0.7),
+                            fontSize: 13,
+                          ),
+                          prefixIcon: const Icon(Icons.search, color: themeColor),
+                          suffixIcon: const Icon(Icons.tune, color: themeColor),
+                          contentPadding: const EdgeInsets.symmetric(vertical: 10),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30),
+                            borderSide: const BorderSide(color: themeColor),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30),
+                            borderSide: const BorderSide(color: themeColor),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 24),
+                      if (restaurants.isEmpty)
+                        Center(
+                          child: Text(
+                            'No approved restaurants yet.',
+                            style: GoogleFonts.poppins(color: Colors.grey),
+                          ),
+                        )
+                      else
+                        ...restaurants.map(
+                              (restaurant) => RestaurantCard(
+                            restaurant: restaurant,
+                            onTap: () => _onRestaurantTap(restaurant),
+                          ),
+                        ),
+                    ],
                   ),
-
-                  const SizedBox(height: 20),
-
-                  // Search bar
-                  TextField(
-                    decoration: InputDecoration(
-                      hintText: 'search for restaurant...',
-                      hintStyle: GoogleFonts.poppins(
-                        color: themeColor.withOpacity(0.7),
-                        fontSize: 13,
-                      ),
-                      prefixIcon: const Icon(Icons.search, color: themeColor),
-                      suffixIcon: const Icon(Icons.tune, color: themeColor),
-                      contentPadding: const EdgeInsets.symmetric(vertical: 10),
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        borderSide:
-                            const BorderSide(color: themeColor, width: 1.5),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        borderSide:
-                            const BorderSide(color: themeColor, width: 1.5),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        borderSide:
-                            const BorderSide(color: themeColor, width: 2),
-                      ),
-                    ),
-                  ),
-
-                  const SizedBox(height: 24),
-
-                  // Restaurant cards
-                  ..._restaurants.map((r) => RestaurantCard(
-                    restaurant: r,
-                    onTap: () => _onRestaurantTap(r),
-                  )),
-                ],
-              ),
+                );
+              },
             ),
           ),
         ],

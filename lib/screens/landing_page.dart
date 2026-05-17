@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-//import 'package:kaon_sa_kuan/screens/user/user_homepage.dart';
+import '../widgets/user/user_nav_bar.dart';
 import 'package:kaon_sa_kuan/data/services/auth_service.dart';
-import '../widgets/bottom_navbar.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
@@ -54,14 +53,22 @@ class _LandingPageState extends State<LandingPage>
   }
 
   void _navigateToHome() async {
-    // Optional: Keep your anonymous sign-in logic
-    await AuthService().signInAnonymously();
-    
-    if (mounted) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const BottomNavBar()),
+    final user = await AuthService().signInAnonymously();
+
+    if (!mounted) return;
+
+    if (user == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Unable to continue as guest. Please try again.'),
+        ),
       );
+      return;
     }
+
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (context) => const BottomNavBar()),
+    );
   }
 
   @override

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart'; 
-//import '../../screens/user/clickResto.dart';
+//import '../../screens/user/user_resto_details.dart';
 
 class InfoChip extends StatelessWidget {
   final IconData icon;

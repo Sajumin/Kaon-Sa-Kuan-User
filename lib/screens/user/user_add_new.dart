@@ -1,16 +1,27 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:kaon_sa_kuan/data/controllers/restaurant_controller.dart';
+import 'package:kaon_sa_kuan/services/cloudinary_service.dart';
+import 'package:kaon_sa_kuan/widgets/user/modal_confirm.dart';
 
 class AddRestaurantPage extends StatefulWidget {
   const AddRestaurantPage({super.key});
 
-@override
+  @override
   State<AddRestaurantPage> createState() => _AddRestaurantPage();
 }
 
 class _AddRestaurantPage extends State<AddRestaurantPage> {
   static const Color warmTangerine = Color(0xFFF47B42);
-
+  final ImagePicker _picker = ImagePicker();
+  final CloudinaryService _cloudinaryService = CloudinaryService();
   final RestaurantController _restaurantController = RestaurantController();
+
+  File? _selectedImage;
+  String _imageUrl = '';
+  bool _isUploadingImage = false;
 
   // Text Controllers
   final TextEditingController _nameController = TextEditingController();
@@ -21,8 +32,58 @@ class _AddRestaurantPage extends State<AddRestaurantPage> {
   final TextEditingController _facebookPageController = TextEditingController();
 
   bool _showTags = false;
-  final List<String> _tagList = RestaurantTags.tags;
+  final List<String> _tagList = [
+    'Cafe',
+    'Samgyupsal',
+    'Buffet',
+    'Fast Food',
+    'Seafood',
+    'Milktea',
+    'Desserts',
+    'Chicken',
+  ];
   final Set<String> _selectedTags = {};
+
+  Future<void> _pickImage() async {
+    try {
+      final pickedImage = await _picker.pickImage(
+        source: ImageSource.gallery,
+        imageQuality: 75,
+      );
+
+      if (pickedImage == null) return;
+
+      setState(() {
+        _selectedImage = File(pickedImage.path);
+        _isUploadingImage = true;
+      });
+
+      final uploadedUrl = await _cloudinaryService.uploadImage(_selectedImage!);
+
+      if (!mounted) return;
+
+      setState(() {
+        _imageUrl = uploadedUrl ?? '';
+        _isUploadingImage = false;
+      });
+
+      if (uploadedUrl == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Image upload failed. Try again.')),
+        );
+      }
+    } catch (e) {
+      if (!mounted) return;
+
+      setState(() {
+        _isUploadingImage = false;
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to pick image: $e')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +137,7 @@ class _AddRestaurantPage extends State<AddRestaurantPage> {
                 child: Container(
                   margin: const EdgeInsets.only(bottom: 12),
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                  const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
                   decoration: BoxDecoration(
                     border: Border.all(color: warmTangerine),
                     borderRadius: BorderRadius.circular(8),
@@ -116,34 +177,34 @@ class _AddRestaurantPage extends State<AddRestaurantPage> {
                     runSpacing: 0,
                     children: _tagList
                         .map((tag) => SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.25,
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Checkbox(
-                                    value: _selectedTags.contains(tag),
-                                    activeColor: warmTangerine,
-                                    onChanged: (val) {
-                                      setState(() {
-                                        if (val == true) {
-                                          _selectedTags.add(tag);
-                                        } else {
-                                          _selectedTags.remove(tag);
-                                        }
-                                      });
-                                    },
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      tag,
-                                      style: const TextStyle(
-                                          fontFamily: 'Afacad', fontSize: 12),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ))
+                      width: MediaQuery.of(context).size.width * 0.25,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Checkbox(
+                            value: _selectedTags.contains(tag),
+                            activeColor: warmTangerine,
+                            onChanged: (val) {
+                              setState(() {
+                                if (val == true) {
+                                  _selectedTags.add(tag);
+                                } else {
+                                  _selectedTags.remove(tag);
+                                }
+                              });
+                            },
+                          ),
+                          Expanded(
+                            child: Text(
+                              tag,
+                              style: const TextStyle(
+                                  fontFamily: 'Afacad', fontSize: 12),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ))
                         .toList(),
                   ),
                 ),
@@ -151,13 +212,14 @@ class _AddRestaurantPage extends State<AddRestaurantPage> {
               // Add Photo Button
               Center(
                 child: TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    'Click to Add Photo',
-                    style: TextStyle(
-                        fontFamily: 'Afacad',
-                        color: warmTangerine,
-                        fontSize: 16),
+                  onPressed: _isUploadingImage ? null : _pickImage,
+                  child: Text(
+                    _isUploadingImage ? 'Uploading photo...' : 'Click to Add Photo',
+                    style: const TextStyle(
+                      fontFamily: 'Afacad',
+                      color: warmTangerine,
+                      fontSize: 16,
+                    ),
                   ),
                 ),
               ),
@@ -170,8 +232,15 @@ class _AddRestaurantPage extends State<AddRestaurantPage> {
                   border: Border.all(color: warmTangerine.withOpacity(0.5)),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: const Icon(Icons.image_outlined,
-                    size: 50, color: Colors.black),
+                child: _selectedImage == null
+                    ? const Icon(Icons.image_outlined, size: 50, color: Colors.black)
+                    : ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Image.file(
+                    _selectedImage!,
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
 
               const SizedBox(height: 25),
@@ -191,37 +260,68 @@ class _AddRestaurantPage extends State<AddRestaurantPage> {
                     ],
                   ),
                   child: ElevatedButton(
-                    onPressed: () async {
-                      try {
-                        await _restaurantController.addRestaurant(
-                          name: _nameController.text,
-                          description: _descriptionController.text,
-                          location: _locationController.text,
-                          priceRange: _priceRangeController.text,
-                          openingHours: _openingHoursController.text,
-                          facebookPage: _facebookPageController.text,
-                          imageUrl: '',
-                          tags: _selectedTags.toList(),
-                        );
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (_) => UserConfirmModal(
+                          icon: Icons.restaurant_rounded,
+                          iconColor: kApproveGreen,
+                          iconBgColor: kApproveGreenBg,
 
-                        if (!mounted) return;
+                          title: 'Submit Restaurant?',
+                          message:
+                          'Are you sure you want to submit this restaurant for review?',
 
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Restaurant added successfully!'),
-                          ),
-                        );
+                          confirmLabel: 'Yes, submit it.',
+                          confirmColor: kApproveGreen,
+                          confirmBgColor: kApproveGreenBg,
 
-                        Navigator.pop(context);
-                      } catch (e) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              e.toString(),
-                            ),
-                          ),
-                        );
-                      }
+                          onConfirm: () async {
+                            Navigator.pop(context);
+
+                            if (_isUploadingImage) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Please wait for the image to finish uploading.')),
+                              );
+                              return;
+                            }
+
+                            if (_selectedImage != null && _imageUrl.isEmpty) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Image upload failed. Please choose the photo again.')),
+                              );
+                              return;
+                            }
+
+                            try {
+                              await _restaurantController.addRestaurant(
+                                name: _nameController.text,
+                                description: _descriptionController.text,
+                                location: _locationController.text,
+                                priceRange: _priceRangeController.text,
+                                openingHours: _openingHoursController.text,
+                                facebookPage: _facebookPageController.text,
+                                tags: _selectedTags.toList(),
+                                imageUrl: _imageUrl,
+                              );
+
+                              if (!mounted) return;
+
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Restaurant submitted for review.')),
+                              );
+
+                              Navigator.pop(context);
+                            } catch (e) {
+                              if (!mounted) return;
+
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('Failed to submit restaurant: $e')),
+                              );
+                            }
+                          },
+                        ),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: warmTangerine,
@@ -246,10 +346,10 @@ class _AddRestaurantPage extends State<AddRestaurantPage> {
   }
 
   Widget _buildTextField(
-    String hint, {
-    int maxLines = 1,
-    required TextEditingController controller,
-  }) {
+      String hint, {
+        int maxLines = 1,
+        required TextEditingController controller,
+      }) {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       child: TextField(
@@ -263,7 +363,7 @@ class _AddRestaurantPage extends State<AddRestaurantPage> {
             fontStyle: FontStyle.italic,
           ),
           contentPadding:
-              const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+          const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
           enabledBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: warmTangerine),
             borderRadius: BorderRadius.circular(8),

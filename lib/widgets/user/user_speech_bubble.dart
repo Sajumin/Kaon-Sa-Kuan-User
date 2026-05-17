@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart'; 
+import 'package:google_fonts/google_fonts.dart';
 
 class SpeechBubble extends StatelessWidget {
   final String text;
@@ -32,7 +32,31 @@ class SpeechBubble extends StatelessWidget {
             ),
           ),
         ),
+        Positioned(
+          top: -10,
+          right: 0,
+          child: CustomPaint(
+            size: const Size(14, 12),
+            painter: _TailPainter(),
+          ),
+        ),
       ],
     );
   }
+}
+
+class _TailPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()..color = const Color(0xFFF28544);
+    final path = Path()
+      ..moveTo(0, size.height)
+      ..lineTo(size.width, size.height)
+      ..lineTo(size.width, 0)
+      ..close();
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter old) => false;
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../widgets/report_card.dart';
-import 'package:kaon_sa_kuan/models/report_data.dart';
+import '../../widgets/user/user_report_card.dart';
+import 'package:kaon_sa_kuan/models/report.dart';
 import 'package:kaon_sa_kuan/data/services/report_service.dart';
 
 class UserReportsPage extends StatefulWidget {

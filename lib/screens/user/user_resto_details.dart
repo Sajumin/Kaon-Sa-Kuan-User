@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../models/restaurant_data.dart'; 
-import '../../widgets/chip.dart'; 
-//import '../../widgets/bottom_navbar.dart';
+import 'package:kaon_sa_kuan/models/restaurant.dart';
+import 'package:kaon_sa_kuan/widgets/user/user_icon_chip.dart';
+//import '../../widgets/user_nav_bar.dart';
 
 class RestaurantDetailPage extends StatelessWidget {
-  final RestaurantData restaurant;
+  final Restaurant restaurant;
 
   const RestaurantDetailPage({super.key, required this.restaurant});
 
@@ -71,7 +71,7 @@ class RestaurantDetailPage extends StatelessWidget {
                             const SizedBox(width: 95),
                             InfoChip(
                               icon: Icons.payments_outlined,
-                              label: restaurant.price,
+                              label: restaurant.priceRange,
                             ),
                           ],
                         ),
@@ -80,7 +80,7 @@ class RestaurantDetailPage extends StatelessWidget {
                           children: [
                             InfoChip(
                               icon: Icons.access_time_outlined,
-                              label: restaurant.hours ?? '8am–5pm',
+                              label: restaurant.openingHours ?? '8am–5pm',
                             ),
                             const SizedBox(width: 100),
                             InfoChip(
