@@ -73,7 +73,7 @@ class _LandingPageState extends State<LandingPage>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Spacer(flex: 3),
+            const Spacer(flex: 2),
 
             // Pig mascot - Referencing image_ce2c96.png
             FadeTransition(
@@ -82,28 +82,30 @@ class _LandingPageState extends State<LandingPage>
                 position: _logoSlide,
                 child: Image.asset(
                   'assets/images/pig_mascot.png',
-                  width: 250,
-                  height: 200,
+                  //width: 400,
+                  height: 180,
+                  fit: BoxFit.contain,
                 ),
               ),
             ),
 
-            const SizedBox(height: 10),
+            //const SizedBox(height: 10),
 
             // App name with white color and bold style
             FadeTransition(
               opacity: _titleFade,
-              child: Text(
-                'Kaon sa Kuan',
-                style: GoogleFonts.poppins(
-                  fontSize: 42,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+              child: const Text(
+                  'Kaon sa Kuan',
+                  style: TextStyle(
+                    fontFamily: 'AdlamDisplay',
+                    fontSize: 40,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
-              ),
             ),
 
-            const Spacer(flex: 4),
+            const Spacer(flex: 3),
 
             // Footer Section
             FadeTransition(
@@ -114,7 +116,7 @@ class _LandingPageState extends State<LandingPage>
                   children: [
                     const Text(
                       "Can't decide where to eat?",
-                      style: TextStyle(color: Colors.white, fontSize: 16),
+                      style: TextStyle(color: Colors.white, fontSize: 16, fontFamily: 'Afacado'),
                     ),
                     const SizedBox(height: 12),
                     _ActionButton(
@@ -156,7 +158,7 @@ class _ActionButton extends StatelessWidget {
         ),
         child: Text(
           label,
-          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'Afacado'),
         ),
       ),
     );

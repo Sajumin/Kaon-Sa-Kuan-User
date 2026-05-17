@@ -110,12 +110,14 @@ class _UserHomepageState extends State<UserHomepage> {
 
           //Body
           Expanded(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(20, 24, 20, 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Align(
+            child: Column(
+              children: [
+                Padding(
+                padding: const EdgeInsets.fromLTRB(20, 24, 20, 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Align(
                     alignment: Alignment.centerRight,
                     child: SpeechBubble(
                       text: "can't decide where to eat? tap me for help!",
@@ -152,19 +154,29 @@ class _UserHomepageState extends State<UserHomepage> {
                         borderRadius: BorderRadius.circular(30),
                         borderSide:
                             const BorderSide(color: themeColor, width: 2),
-                      ),
+                            )
+                          ),
+                        ),
+                     ],
                     ),
                   ),
 
-                  const SizedBox(height: 24),
-
-                  // Restaurant cards
-                  ..._restaurants.map((r) => RestaurantCard(
-                    restaurant: r,
-                    onTap: () => _onRestaurantTap(r),
-                  )),
-                ],
-              ),
+                  //const SizedBox(height: 24),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                            ..._restaurants.map((r) => RestaurantCard(
+                              restaurant: r,
+                              onTap: () => _onRestaurantTap(r),
+                        )),
+                      ]
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],
