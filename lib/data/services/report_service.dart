@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:kaon_sa_kuan/models/report_data.dart';
+import 'package:kaon_sa_kuan/models/report.dart';
 
 class ReportService {
   final CollectionReference _reportsCollection = FirebaseFirestore.instance.collection('reports');

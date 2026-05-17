@@ -1,0 +1,25 @@
+class RestaurantTags {
+  static const List<String> tags = [
+    'Breakfast',
+    'Streetfood',
+    'Coffee',
+    'Lunch',
+    'Drinks',
+    'Pastry',
+    'Dinner',
+    'Sushi',
+    'Pasta',
+    'Merienda',
+    'Noodles',
+    'Pizza',
+    'Chicken',
+    'BBQ / Grill',
+    'Veggies',
+    'Pork',
+    'Samgyup',
+    'Fish',
+    'Silog',
+    'Soup',
+    'Seafood',
+  ];
+}
