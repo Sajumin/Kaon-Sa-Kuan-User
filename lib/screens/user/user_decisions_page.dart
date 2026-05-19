@@ -78,7 +78,10 @@ class _FoodDecisionMakerState extends State<FoodDecisionMaker> {
               );
             }
 
-            final recommended = _pickRestaurant(restaurants);
+            final recommended = _algorithmResultService.pickRestaurant(
+              restaurants: restaurants,
+              answers: _answers,
+            );
 
             return ResultPage(
               restaurant: recommended,
