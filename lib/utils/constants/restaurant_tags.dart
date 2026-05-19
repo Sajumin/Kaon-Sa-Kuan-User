@@ -5,7 +5,8 @@ class RestaurantOptions {
     'Igtuba',
     'Mat-y',
     'Baybay',
-    'Campus / Box 1',
+    'Campus',
+    'Box 1',
     'Banwa',
   ];
 
