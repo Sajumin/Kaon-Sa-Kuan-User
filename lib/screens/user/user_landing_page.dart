@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../widgets/user/user_nav_bar.dart';
+import '../../widgets/user/user_nav_bar.dart';
 import 'package:kaon_sa_kuan/data/services/auth_service.dart';
 
 class LandingPage extends StatefulWidget {
