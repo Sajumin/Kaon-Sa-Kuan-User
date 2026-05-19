@@ -71,8 +71,6 @@ closeTime
 mealTags
 ```
 
-## Firestore Restaurant Shape
-\
 ## Project Structure
 
 ```bash
