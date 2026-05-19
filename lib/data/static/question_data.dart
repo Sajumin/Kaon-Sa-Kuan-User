@@ -1,4 +1,5 @@
 import 'package:kaon_sa_kuan/models/question.dart';
+import 'package:kaon_sa_kuan/utils/constants/restaurant_tags.dart';
 
 // ── Static question data (swap with Firestore fetch later) ────────────────────
 
@@ -8,10 +9,10 @@ const List<Question> kQuestions = [
     question: "What's your budget?",
     type: QuestionType.singleChoice,
     options: [
-      "Below ₱80",
-      "₱81–₱150",
-      "₱151–₱300",
-      "₱300+",
+      "Below PHP 80",
+      "PHP 81 - PHP 150",
+      "PHP 151 - PHP 300",
+      "PHP 300+",
     ],
     purpose: "Filters restaurants by budgetTags / averageCost",
   ),
@@ -47,10 +48,7 @@ const List<Question> kQuestions = [
     question: "Where do you want to eat?",
     type: QuestionType.singleChoice,
     options: [
-      "Hollywood St.",
-      "Seawall",
-      "Igtuba",
-      "Mat-y",
+      ...RestaurantOptions.locations,
       "Anywhere",
     ],
     purpose: "Filters by preferred location",
