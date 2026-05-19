@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:kaon_sa_kuan/data/controllers/restaurant_controller.dart';
 import 'package:kaon_sa_kuan/services/cloudinary_service.dart';
 import 'package:kaon_sa_kuan/widgets/user/modal_confirm.dart';
+import 'package:kaon_sa_kuan/widgets/user/user_success_modal.dart';
 
 class AddRestaurantPage extends StatefulWidget {
   const AddRestaurantPage({super.key});
@@ -307,11 +308,19 @@ class _AddRestaurantPage extends State<AddRestaurantPage> {
 
                               if (!mounted) return;
 
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Restaurant submitted for review.')),
+                              showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (dialogContext) => UserSuccessModal(
+                                  title: 'Request Sent!',
+                                  message:
+                                  'Your restaurant has been submitted for admin review!',
+                                  onPressed: () {
+                                    Navigator.pop(dialogContext);
+                                    Navigator.pop(context);
+                                  },
+                                ),
                               );
-
-                              Navigator.pop(context);
                             } catch (e) {
                               if (!mounted) return;
 
