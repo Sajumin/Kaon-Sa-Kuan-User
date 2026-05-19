@@ -17,6 +17,7 @@ class FoodDecisionMaker extends StatefulWidget {
 
 class _FoodDecisionMakerState extends State<FoodDecisionMaker> {
   final RestaurantService _restaurantService = RestaurantService();
+  final AlgorithmResultService _algorithmResultService = AlgorithmResultService();
 
   int _currentIndex = 0;
   String? _question2Answer;
