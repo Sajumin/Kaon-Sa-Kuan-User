@@ -10,38 +10,40 @@ class RestaurantController {
     required String name,
     required String description,
     required String location,
-    required String priceRange,
-    required String openingHours,
+    required String foodCategory,
+    required List<String> foodType,
+    required int averageCostMin,
+    required int averageCostMax,
+    required List<String> budgetTags,
+    required String openTime,
+    required String closeTime,
+    required List<String> mealTags,
     required String facebookPage,
-    required List<String> tags,
     required String imageUrl,
   }) async {
-    // Basic validation
     if (name.trim().isEmpty) {
       throw Exception("Restaurant name is required");
     }
 
-    User? currentUser = FirebaseAuth.instance.currentUser;
-
-    if (currentUser == null) {
-      final credential = await FirebaseAuth.instance.signInAnonymously();
-      currentUser = credential.user;
-    }
-
-    if (currentUser == null) {
-      throw Exception("Unable to sign in anonymously.");
+    if (averageCostMax < averageCostMin) {
+      throw Exception("Priciest meal must be higher than cheapest meal.");
     }
 
     final restaurant = Restaurant(
       id: '',
       name: name.trim(),
       description: description.trim(),
-      location: location.trim(),
-      priceRange: priceRange.trim(),
-      openingHours: openingHours.trim(),
+      location: location,
+      foodCategory: foodCategory,
+      foodType: foodType,
+      averageCostMin: averageCostMin,
+      averageCostMax: averageCostMax,
+      budgetTags: budgetTags,
+      openTime: openTime,
+      closeTime: closeTime,
+      mealTags: mealTags,
       facebookPage: facebookPage.trim(),
       imageUrl: imageUrl.trim(),
-      tags: tags,
       approvedBy: null,
       status: 'pending',
       createdByAdmin: false,

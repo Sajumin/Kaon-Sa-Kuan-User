@@ -6,6 +6,7 @@ import 'package:kaon_sa_kuan/models/restaurant.dart';
 import 'package:kaon_sa_kuan/screens/user/user_results_page.dart';
 import 'package:kaon_sa_kuan/widgets/user/modal_confirm.dart';
 import 'package:kaon_sa_kuan/widgets/user/question_card.dart';
+import 'package:kaon_sa_kuan/data/services/algorithm_result_service.dart';
 
 class FoodDecisionMaker extends StatefulWidget {
   const FoodDecisionMaker({super.key});
@@ -16,6 +17,7 @@ class FoodDecisionMaker extends StatefulWidget {
 
 class _FoodDecisionMakerState extends State<FoodDecisionMaker> {
   final RestaurantService _restaurantService = RestaurantService();
+  final AlgorithmResultService _algorithmResultService = AlgorithmResultService();
 
   int _currentIndex = 0;
   String? _question2Answer;
@@ -76,7 +78,10 @@ class _FoodDecisionMakerState extends State<FoodDecisionMaker> {
               );
             }
 
-            final recommended = _pickRestaurant(restaurants);
+            final recommended = _algorithmResultService.pickRestaurant(
+              restaurants: restaurants,
+              answers: _answers,
+            );
 
             return ResultPage(
               restaurant: recommended,
@@ -86,41 +91,6 @@ class _FoodDecisionMakerState extends State<FoodDecisionMaker> {
         ),
       ),
     );
-  }
-
-  Restaurant _pickRestaurant(List<Restaurant> restaurants) {
-    final selectedAnswers = _answers.whereType<String>().map((a) => a.toLowerCase()).toList();
-
-    Restaurant best = restaurants.first;
-    int bestScore = -1;
-
-    for (final restaurant in restaurants) {
-      final searchableText = [
-        restaurant.name,
-        restaurant.description,
-        restaurant.location,
-        restaurant.priceRange,
-        restaurant.openingHours,
-        ...restaurant.tags,
-      ].join(' ').toLowerCase();
-
-      int score = 0;
-
-      for (final answer in selectedAnswers) {
-        if (answer == 'anywhere' || answer == 'not sure') {
-          score += 1;
-        } else if (searchableText.contains(answer.toLowerCase())) {
-          score += 3;
-        }
-      }
-
-      if (score > bestScore) {
-        best = restaurant;
-        bestScore = score;
-      }
-    }
-
-    return best;
   }
 
   void _resetQuestions() {
