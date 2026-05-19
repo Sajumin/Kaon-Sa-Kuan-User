@@ -47,14 +47,14 @@ class RestaurantDetailPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  restaurant.imageUrl != null
+                  restaurant.imageUrl.isNotEmpty
                       ? Image.network(
-                          restaurant.imageUrl!,
-                          height: 200,
-                          width: double.infinity,
-                          fit: BoxFit.cover,
-                          errorBuilder: (_, __, ___) => _imagePlaceholder(),
-                        )
+                    restaurant.imageUrl,
+                    height: 200,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                    errorBuilder: (_, __, ___) => _imagePlaceholder(),
+                  )
                       : _imagePlaceholder(),
 
                   Padding(
@@ -80,7 +80,7 @@ class RestaurantDetailPage extends StatelessWidget {
                           children: [
                             InfoChip(
                               icon: Icons.access_time_outlined,
-                              label: restaurant.openingHours ?? '8am–5pm',
+                              label: restaurant.openingHours,
                             ),
                             const SizedBox(width: 100),
                             InfoChip(
@@ -93,8 +93,9 @@ class RestaurantDetailPage extends StatelessWidget {
                         const SizedBox(height: 20),
 
                         Text(
-                          restaurant.description ??
-                              'No description available.',
+                          restaurant.description.isNotEmpty
+                              ? restaurant.description
+                              : 'No description available.',
                           style: GoogleFonts.poppins(
                             fontSize: 13,
                             color: Colors.black87,
@@ -104,8 +105,7 @@ class RestaurantDetailPage extends StatelessWidget {
 
                         const SizedBox(height: 20),
 
-                        if (restaurant.tags != null &&
-                            restaurant.tags!.isNotEmpty)
+                        if (restaurant.tags.isNotEmpty)
                           Wrap(
                             spacing: 8,
                             runSpacing: 8,
