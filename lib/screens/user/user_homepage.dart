@@ -101,59 +101,73 @@ class _UserHomepageState extends State<UserHomepage> {
 
                 final restaurants = snapshot.data ?? [];
 
-                return SingleChildScrollView(
-                  padding: const EdgeInsets.fromLTRB(20, 24, 20, 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: GestureDetector(
-                          onTap: _openDecisionMaker,
-                          child: const SpeechBubble(
-                            text: "can't decide where to eat? tap me for help!",
-                            themeColor: themeColor,
+                return Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 24, 20, 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: GestureDetector(
+                              onTap: _openDecisionMaker,
+                              child: const SpeechBubble(
+                                text: "can't decide where to eat? tap me for help!",
+                                themeColor: themeColor,
+                              ),
+                            ),
                           ),
+                          const SizedBox(height: 20),
+                          TextField(
+                            decoration: InputDecoration(
+                              hintText: 'search for restaurant...',
+                              hintStyle: GoogleFonts.poppins(
+                                color: themeColor.withOpacity(0.7),
+                                fontSize: 13,
+                              ),
+                              prefixIcon: const Icon(Icons.search, color: themeColor),
+                              suffixIcon: const Icon(Icons.tune, color: themeColor),
+                              contentPadding:
+                                  const EdgeInsets.symmetric(vertical: 10),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30),
+                                borderSide: const BorderSide(color: themeColor),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30),
+                                borderSide: const BorderSide(color: themeColor),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            if (restaurants.isEmpty)
+                              Center(
+                                child: Text(
+                                  'No approved restaurants yet.',
+                                  style: GoogleFonts.poppins(color: Colors.grey),
+                                ),
+                              )
+                            else
+                              ...restaurants.map(
+                                (restaurant) => RestaurantCard(
+                                  restaurant: restaurant,
+                                  onTap: () => _onRestaurantTap(restaurant),
+                                ),
+                              ),
+                          ],
                         ),
                       ),
-                      const SizedBox(height: 20),
-                      TextField(
-                        decoration: InputDecoration(
-                          hintText: 'search for restaurant...',
-                          hintStyle: GoogleFonts.poppins(
-                            color: themeColor.withOpacity(0.7),
-                            fontSize: 13,
-                          ),
-                          prefixIcon: const Icon(Icons.search, color: themeColor),
-                          suffixIcon: const Icon(Icons.tune, color: themeColor),
-                          contentPadding: const EdgeInsets.symmetric(vertical: 10),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30),
-                            borderSide: const BorderSide(color: themeColor),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30),
-                            borderSide: const BorderSide(color: themeColor),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 24),
-                      if (restaurants.isEmpty)
-                        Center(
-                          child: Text(
-                            'No approved restaurants yet.',
-                            style: GoogleFonts.poppins(color: Colors.grey),
-                          ),
-                        )
-                      else
-                        ...restaurants.map(
-                              (restaurant) => RestaurantCard(
-                            restaurant: restaurant,
-                            onTap: () => _onRestaurantTap(restaurant),
-                          ),
-                        ),
-                    ],
-                  ),
+                    ),
+                  ],
                 );
               },
             ),
