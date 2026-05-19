@@ -6,6 +6,7 @@ import 'package:kaon_sa_kuan/data/controllers/restaurant_controller.dart';
 import 'package:kaon_sa_kuan/services/cloudinary_service.dart';
 import 'package:kaon_sa_kuan/widgets/user/modal_confirm.dart';
 import 'package:kaon_sa_kuan/widgets/user/user_success_modal.dart';
+import 'package:kaon_sa_kuan/utils/constants/restaurant_tags.dart';
 
 class AddRestaurantPage extends StatefulWidget {
   const AddRestaurantPage({super.key});
@@ -27,23 +28,18 @@ class _AddRestaurantPage extends State<AddRestaurantPage> {
   // Text Controllers
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
-  final TextEditingController _locationController = TextEditingController();
-  final TextEditingController _priceRangeController = TextEditingController();
-  final TextEditingController _openingHoursController = TextEditingController();
+  final TextEditingController _averageMinCostController = TextEditingController();
+  final TextEditingController _averageMaxCostController = TextEditingController();
   final TextEditingController _facebookPageController = TextEditingController();
 
-  bool _showTags = false;
-  final List<String> _tagList = [
-    'Cafe',
-    'Samgyupsal',
-    'Buffet',
-    'Fast Food',
-    'Seafood',
-    'Milktea',
-    'Desserts',
-    'Chicken',
-  ];
-  final Set<String> _selectedTags = {};
+  String _selectedLocation = RestaurantOptions.locations.first;
+  String _selectedFoodCategory = RestaurantOptions.foodCategories.first;
+  String _openTime = '06:00';
+  String _closeTime = '20:00';
+
+  final Set<String> _selectedFoodTypes = {};
+  final Set<String> _selectedBudgetTags = {};
+  final Set<String> _selectedMealTags = {};
 
   Future<void> _pickImage() async {
     try {
@@ -87,6 +83,16 @@ class _AddRestaurantPage extends State<AddRestaurantPage> {
   }
 
   @override
+  void dispose() {
+    _nameController.dispose();
+    _descriptionController.dispose();
+    _averageMinCostController.dispose();
+    _averageMaxCostController.dispose();
+    _facebookPageController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -119,96 +125,69 @@ class _AddRestaurantPage extends State<AddRestaurantPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildTextField('Type restaurant name...',
-                  controller: _nameController),
-              _buildTextField('Type Description ...',
-                  controller: _descriptionController, maxLines: 5),
-              _buildTextField('Type Location...',
-                  controller: _locationController),
-              _buildTextField('Type Price Range...',
-                  controller: _priceRangeController),
-              _buildTextField('Type Opening Hours...',
-                  controller: _openingHoursController),
-              _buildTextField('Type Facebook Page / Account',
-                  controller: _facebookPageController),
-
-              // Tags Toggle Header
-              GestureDetector(
-                onTap: () => setState(() => _showTags = !_showTags),
-                child: Container(
-                  margin: const EdgeInsets.only(bottom: 12),
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: warmTangerine),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        'Tags',
-                        style: TextStyle(
-                            fontFamily: 'Afacad',
-                            color: warmTangerine,
-                            fontSize: 16),
-                      ),
-                      Icon(
-                        _showTags
-                            ? Icons.keyboard_arrow_up
-                            : Icons.keyboard_arrow_down,
-                        color: Colors.black,
-                      ),
-                    ],
-                  ),
-                ),
+              _buildTextField(
+                "What's the place called?",
+                controller: _nameController,
               ),
 
-              // Expandable Tags Grid
-              if (_showTags)
-                Container(
-                  margin: const EdgeInsets.only(bottom: 12),
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black54),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Wrap(
-                    spacing: 8,
-                    runSpacing: 0,
-                    children: _tagList
-                        .map((tag) => SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.25,
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Checkbox(
-                            value: _selectedTags.contains(tag),
-                            activeColor: warmTangerine,
-                            onChanged: (val) {
-                              setState(() {
-                                if (val == true) {
-                                  _selectedTags.add(tag);
-                                } else {
-                                  _selectedTags.remove(tag);
-                                }
-                              });
-                            },
-                          ),
-                          Expanded(
-                            child: Text(
-                              tag,
-                              style: const TextStyle(
-                                  fontFamily: 'Afacad', fontSize: 12),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ))
-                        .toList(),
-                  ),
-                ),
+              _buildTextField(
+                'What should people know about it?',
+                controller: _descriptionController,
+                maxLines: 5,
+              ),
+
+              _buildDropdown(
+                label: 'Where is it located?',
+                value: _selectedLocation,
+                options: RestaurantOptions.locations,
+                onChanged: (value) => setState(() => _selectedLocation = value!),
+              ),
+              _buildDropdown(
+                label: 'What kind of place is it?',
+                value: _selectedFoodCategory,
+                options: RestaurantOptions.foodCategories,
+                onChanged: (value) => setState(() => _selectedFoodCategory = value!),
+              ),
+              _buildTextField(
+                'Cheapest meal here',
+                controller: _averageMinCostController,
+                keyboardType: TextInputType.number,
+              ),
+              _buildTextField(
+                'Priciest meal here',
+                controller: _averageMaxCostController,
+                keyboardType: TextInputType.number,
+              ),
+              _buildTimeButton(
+                label: 'They open at',
+                value: _openTime,
+                onPicked: (value) => setState(() => _openTime = value),
+              ),
+              _buildTimeButton(
+                label: 'They close at',
+                value: _closeTime,
+                onPicked: (value) => setState(() => _closeTime = value),
+              ),
+              _buildCheckboxGroup(
+                title: 'What food do they serve?',
+                options: RestaurantOptions.foodTypes,
+                selected: _selectedFoodTypes,
+              ),
+              _buildCheckboxGroup(
+                title: 'What budget fits them?',
+                options: RestaurantOptions.budgetTags,
+                selected: _selectedBudgetTags,
+              ),
+              _buildCheckboxGroup(
+                title: 'When are they good for?',
+                options: RestaurantOptions.mealTags,
+                selected: _selectedMealTags,
+              ),
+
+              _buildTextField(
+                'Facebook page or account',
+                controller: _facebookPageController,
+              ),
 
               // Add Photo Button
               Center(
@@ -280,6 +259,32 @@ class _AddRestaurantPage extends State<AddRestaurantPage> {
                           onConfirm: () async {
                             Navigator.pop(context);
 
+                            final averageMinCost = int.tryParse(_averageMinCostController.text.trim());
+                            final averageMaxCost = int.tryParse(_averageMaxCostController.text.trim());
+
+                            if (averageMinCost == null || averageMaxCost == null) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Please enter valid meal prices.')),
+                              );
+                              return;
+                            }
+
+                            if (averageMaxCost < averageMinCost) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Priciest meal should be higher than cheapest meal.')),
+                              );
+                              return;
+                            }
+
+                            if (_selectedFoodTypes.isEmpty ||
+                                _selectedBudgetTags.isEmpty ||
+                                _selectedMealTags.isEmpty) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Please choose food, budget, and meal tags.')),
+                              );
+                              return;
+                            }
+
                             if (_isUploadingImage) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(content: Text('Please wait for the image to finish uploading.')),
@@ -298,11 +303,16 @@ class _AddRestaurantPage extends State<AddRestaurantPage> {
                               await _restaurantController.addRestaurant(
                                 name: _nameController.text,
                                 description: _descriptionController.text,
-                                location: _locationController.text,
-                                priceRange: _priceRangeController.text,
-                                openingHours: _openingHoursController.text,
+                                location: _selectedLocation,
+                                foodCategory: _selectedFoodCategory,
+                                foodType: _selectedFoodTypes.toList(),
+                                averageCostMin: averageMinCost,
+                                averageCostMax: averageMaxCost,
+                                budgetTags: _selectedBudgetTags.toList(),
+                                openTime: _openTime,
+                                closeTime: _closeTime,
+                                mealTags: _selectedMealTags.toList(),
                                 facebookPage: _facebookPageController.text,
-                                tags: _selectedTags.toList(),
                                 imageUrl: _imageUrl,
                               );
 
@@ -313,8 +323,7 @@ class _AddRestaurantPage extends State<AddRestaurantPage> {
                                 barrierDismissible: false,
                                 builder: (dialogContext) => UserSuccessModal(
                                   title: 'Request Sent!',
-                                  message:
-                                  'Your restaurant has been submitted for admin review!',
+                                  message: 'Your restaurant has been submitted for admin review!',
                                   onPressed: () {
                                     Navigator.pop(dialogContext);
                                     Navigator.pop(context);
@@ -354,33 +363,214 @@ class _AddRestaurantPage extends State<AddRestaurantPage> {
     );
   }
 
+  TextStyle get _fieldTextStyle => const TextStyle(
+    fontFamily: 'Afacad',
+    fontSize: 16,
+    color: Colors.black87,
+  );
+
+  TextStyle get _fieldHintStyle => TextStyle(
+    fontFamily: 'Afacad',
+    color: warmTangerine.withOpacity(0.5),
+    fontStyle: FontStyle.italic,
+  );
+
+  InputBorder get _fieldBorder => OutlineInputBorder(
+    borderSide: const BorderSide(color: warmTangerine),
+    borderRadius: BorderRadius.circular(8),
+  );
+
+  InputDecoration _fieldDecoration(String label) {
+    return InputDecoration(
+      labelText: label,
+      labelStyle: _fieldHintStyle,
+      floatingLabelStyle: const TextStyle(
+        fontFamily: 'Afacad',
+        color: warmTangerine,
+        fontWeight: FontWeight.w600,
+      ),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      enabledBorder: _fieldBorder,
+      focusedBorder: OutlineInputBorder(
+        borderSide: const BorderSide(color: warmTangerine, width: 2),
+        borderRadius: BorderRadius.circular(8),
+      ),
+    );
+  }
+
+  String _formatTimeForUser(String value) {
+    final time = _timeFromValue(value);
+    final hour = time.hourOfPeriod == 0 ? 12 : time.hourOfPeriod;
+    final minute = time.minute.toString().padLeft(2, '0');
+    final period = time.period == DayPeriod.am ? 'AM' : 'PM';
+
+    return '$hour:$minute $period';
+  }
+
+  TimeOfDay _timeFromValue(String value) {
+    final parts = value.split(':');
+
+    if (parts.length != 2) {
+      return TimeOfDay.now();
+    }
+
+    final hour = int.tryParse(parts[0]);
+    final minute = int.tryParse(parts[1]);
+
+    if (hour == null || minute == null) {
+      return TimeOfDay.now();
+    }
+
+    return TimeOfDay(hour: hour, minute: minute);
+  }
+
   Widget _buildTextField(
       String hint, {
         int maxLines = 1,
         required TextEditingController controller,
+        TextInputType keyboardType = TextInputType.text,
       }) {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       child: TextField(
         controller: controller,
         maxLines: maxLines,
-        decoration: InputDecoration(
-          hintText: hint,
-          hintStyle: TextStyle(
-            fontFamily: 'Afacad',
-            color: warmTangerine.withOpacity(0.5),
-            fontStyle: FontStyle.italic,
+        keyboardType: keyboardType,
+        style: _fieldTextStyle,
+        decoration: _fieldDecoration(hint),
+      ),
+    );
+  }
+
+  Widget _buildDropdown({
+    required String label,
+    required String value,
+    required List<String> options,
+    required ValueChanged<String?> onChanged,
+  }) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      child: DropdownButtonFormField<String>(
+        value: value,
+        decoration: _fieldDecoration(label),
+        style: _fieldTextStyle,
+        dropdownColor: Colors.white,
+        iconEnabledColor: warmTangerine,
+        items: options
+            .map(
+              (option) => DropdownMenuItem(
+            value: option,
+            child: Text(option, style: _fieldTextStyle),
           ),
-          contentPadding:
-          const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-          enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: warmTangerine),
-            borderRadius: BorderRadius.circular(8),
+        )
+            .toList(),
+        onChanged: onChanged,
+      ),
+    );
+  }
+
+  Widget _buildCheckboxGroup({
+    required String title,
+    required List<String> options,
+    required Set<String> selected,
+  }) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        border: Border.all(color: warmTangerine),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(title, style: _fieldHintStyle),
+          const SizedBox(height: 8),
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: options.map((option) {
+              final isSelected = selected.contains(option);
+
+              return FilterChip(
+                label: Text(
+                  option,
+                  style: TextStyle(
+                    fontFamily: 'Afacad',
+                    color: isSelected ? warmTangerine : Colors.black87,
+                  ),
+                ),
+                selected: isSelected,
+                selectedColor: warmTangerine.withOpacity(0.15),
+                checkmarkColor: warmTangerine,
+                side: BorderSide(color: warmTangerine.withOpacity(0.6)),
+                backgroundColor: Colors.white,
+                onSelected: (value) {
+                  setState(() {
+                    value ? selected.add(option) : selected.remove(option);
+                  });
+                },
+              );
+            }).toList(),
           ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: warmTangerine, width: 2),
-            borderRadius: BorderRadius.circular(8),
-          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTimeButton({
+    required String label,
+    required String value,
+    required ValueChanged<String> onPicked,
+  }) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(8),
+        onTap: () async {
+          final picked = await showTimePicker(
+            context: context,
+            initialTime: _timeFromValue(value),
+            helpText: label,
+            cancelText: 'Cancel',
+            confirmText: 'OK',
+            builder: (context, child) {
+              return MediaQuery(
+                data: MediaQuery.of(context).copyWith(
+                  alwaysUse24HourFormat: false,
+                ),
+                child: Theme(
+                  data: Theme.of(context).copyWith(
+                    colorScheme: const ColorScheme.light(
+                      primary: warmTangerine,
+                      onPrimary: Colors.white,
+                      surface: Colors.white,
+                      onSurface: Colors.black87,
+                    ),
+                    timePickerTheme: TimePickerThemeData(
+                      backgroundColor: Colors.white,
+                      hourMinuteColor: warmTangerine.withOpacity(0.18),
+                      hourMinuteTextColor: Colors.black87,
+                      dialHandColor: warmTangerine,
+                      dialBackgroundColor: warmTangerine.withOpacity(0.10),
+                      entryModeIconColor: warmTangerine,
+                    ),
+                  ),
+                  child: child!,
+                ),
+              );
+            },
+          );
+
+          if (picked == null) return;
+
+          final hour = picked.hour.toString().padLeft(2, '0');
+          final minute = picked.minute.toString().padLeft(2, '0');
+          onPicked('$hour:$minute');
+        },
+        child: InputDecorator(
+          decoration: _fieldDecoration(label),
+          child: Text(_formatTimeForUser(value), style: _fieldTextStyle),
         ),
       ),
     );
