@@ -191,9 +191,13 @@ class _AddRestaurantPage extends State<AddRestaurantPage> {
 
               // Add Photo Button
               Center(
-                child: TextButton(
+                child: TextButton.icon(
                   onPressed: _isUploadingImage ? null : _pickImage,
-                  child: Text(
+                  icon: const Icon(
+                    Icons.add_photo_alternate_outlined,
+                    color: warmTangerine,
+                  ),
+                  label: Text(
                     _isUploadingImage ? 'Uploading photo...' : 'Click to Add Photo',
                     style: const TextStyle(
                       fontFamily: 'Afacad',
@@ -212,13 +216,76 @@ class _AddRestaurantPage extends State<AddRestaurantPage> {
                   border: Border.all(color: warmTangerine.withOpacity(0.5)),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: _selectedImage == null
-                    ? const Icon(Icons.image_outlined, size: 50, color: Colors.black)
-                    : ClipRRect(
+                child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: Image.file(
-                    _selectedImage!,
-                    fit: BoxFit.cover,
+                  child: _isUploadingImage
+                      ? Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      CircularProgressIndicator(color: warmTangerine),
+                      SizedBox(height: 12),
+                      Text(
+                        'Uploading photo...',
+                        style: TextStyle(
+                          fontFamily: 'Afacad',
+                          color: warmTangerine,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
+                  )
+                      : _selectedImage != null
+                      ? Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      Image.file(
+                        _selectedImage!,
+                        fit: BoxFit.cover,
+                      ),
+                      Positioned(
+                        top: 8,
+                        right: 8,
+                        child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _selectedImage = null;
+                              _imageUrl = '';
+                            });
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(4),
+                            decoration: const BoxDecoration(
+                              color: Colors.black54,
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(
+                              Icons.close,
+                              color: Colors.white,
+                              size: 18,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                      : const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.image_outlined,
+                        size: 50,
+                        color: Colors.black26,
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        'No photo added yet',
+                        style: TextStyle(
+                          fontFamily: 'Afacad',
+                          color: Colors.black38,
+                          fontSize: 13,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
