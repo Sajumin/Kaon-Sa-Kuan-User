@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../../widgets/report_card.dart';
 
 class UserReportsPage extends StatefulWidget {
@@ -55,7 +54,8 @@ class _UserReportsPageState extends State<UserReportsPage> {
                     children: [
                       Text(
                         'Community Reports',
-                        style: GoogleFonts.poppins(
+                        style: const TextStyle(
+                          fontFamily: 'Afacad',
                           color: Colors.white,
                           fontSize: 20,
                           fontWeight: FontWeight.w700,
@@ -63,8 +63,9 @@ class _UserReportsPageState extends State<UserReportsPage> {
                       ),
                       Text(
                         'Help keep restaurants accurate.',
-                        style: GoogleFonts.poppins(
-                          color: Colors.white.withOpacity(0.85),
+                        style: const TextStyle(
+                          fontFamily: 'Afacad',
+                          color: Colors.white,
                           fontSize: 12,
                         ),
                       ),
@@ -82,7 +83,8 @@ class _UserReportsPageState extends State<UserReportsPage> {
                   ),
                   child: Text(
                     '${_reports.length} reports',
-                    style: GoogleFonts.poppins(
+                    style: const TextStyle(
+                      fontFamily: 'Afacad',
                       color: Colors.white,
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
@@ -99,8 +101,8 @@ class _UserReportsPageState extends State<UserReportsPage> {
                 ? Center(
                     child: Text(
                       'No reports yet. Be the first!',
-                      style: GoogleFonts.poppins(
-                          color: Colors.grey, fontSize: 13),
+                      style: const TextStyle(
+                          fontFamily: 'Afacad', color: Colors.grey, fontSize: 13),
                     ),
                   )
                 : ListView.separated(
@@ -137,8 +139,9 @@ class _UserReportsPageState extends State<UserReportsPage> {
                     onSubmitted: (_) => _submitReport(),
                     decoration: InputDecoration(
                       hintText: 'Post an anonymous report...',
-                      hintStyle: GoogleFonts.poppins(
-                        color: themeColor.withOpacity(0.5),
+                      hintStyle: const TextStyle(
+                        fontFamily: 'Afacad',
+                        color: themeColor,
                         fontSize: 13,
                       ),
                       contentPadding: const EdgeInsets.symmetric(

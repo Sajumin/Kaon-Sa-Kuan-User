@@ -30,3 +30,10 @@ flutter:
     - assets/images/thinking 1.png
     - assets/images/thinking 2.png
     - assets/images/yum.png
+  fonts:
+  - family: AdlamDisplay
+    fonts:
+      - asset: assets/images/fonts/ADLaM_Display/Afacad/Afacad-VariableFont_wght.ttf
+  - family: Afacad
+    fonts:
+      - asset: assets/images/fonts/ADLaM_Display/Afacad/Afacad-VariableFont_wght.ttf

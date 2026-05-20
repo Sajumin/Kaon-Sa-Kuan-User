@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class QuestionScreen extends StatelessWidget {
   final String questionText;
@@ -66,7 +65,8 @@ class QuestionScreen extends StatelessWidget {
 
                     Text(
                       'Question $currentIndex/$total',
-                      style: GoogleFonts.poppins(
+                      style: const TextStyle(
+                        fontFamily: 'Afacad',
                         fontSize: 10,
                         fontWeight: FontWeight.w500,
                         color: Colors.black87,
@@ -187,7 +187,8 @@ class _SpeechBubble extends StatelessWidget {
           ),
           child: Text(
             text,
-            style: GoogleFonts.poppins(
+            style: const TextStyle(
+              fontFamily: 'Afacad',
               color: Colors.white,
               fontSize: 16,
               fontWeight: FontWeight.w500,
@@ -245,7 +246,8 @@ class _ChoiceButton extends StatelessWidget {
         child: Text(
           label,
           textAlign: TextAlign.center,
-          style: GoogleFonts.poppins(
+          style: const TextStyle(
+            fontFamily: 'Afacad',
             fontSize: 13,
             fontWeight: FontWeight.w500,
             color: Colors.black87,

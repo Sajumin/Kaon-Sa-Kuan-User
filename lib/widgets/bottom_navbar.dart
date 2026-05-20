@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../screens/user/user_homepage.dart';
 import '../screens/user/user_reportspage.dart';
 import '../screens/user/user_addresto.dart';
@@ -75,7 +74,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
           ),
           Text(
             label,
-            style: GoogleFonts.poppins(
+            style: TextStyle(
+              fontFamily: 'Afacad',
               fontSize: 11,
               fontWeight: isActive ? FontWeight.w700 : FontWeight.w400,
               color: isActive ? themeColor : themeColor.withOpacity(0.35),

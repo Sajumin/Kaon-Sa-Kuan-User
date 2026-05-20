@@ -22,7 +22,7 @@ class _AddRestaurantPage extends State<AddRestaurantPage> {
   final TextEditingController _facebookPageController = TextEditingController();
 
   bool _showTags = false;
-  File? _selectedImage;
+  //File? _selectedImage;
   bool _isUploadingImage = false;
   final List<String> _tagList = [
                                   'Cafe',
@@ -163,15 +163,13 @@ class _AddRestaurantPage extends State<AddRestaurantPage> {
               // Add Photo Button
               Center(
                 child: TextButton(
-                  onPressed: _isUploadingImage ? null : () async {
-                    setState(() => _isUploadingImage = true);
-                    await BackendUploadFunction(); // your existing backend call
-                    setState(() => _isUploadingImage = false);
-                  },
-                  icon: Icon(Icons.add_photo_alternate_outlined, color: warmTangerine),
-                  label: Text(
+                  onPressed: () {},
+                  child: const Text(
                     'Click to Add Photo',
-                    style: TextStyle(fontFamily: 'Afacad', color: warmTangerine, fontSize: 16),
+                    style: TextStyle(
+                        fontFamily: 'Afacad',
+                        color: warmTangerine,
+                        fontSize: 16),
                   ),
                 ),
               ),
@@ -185,67 +183,9 @@ class _AddRestaurantPage extends State<AddRestaurantPage> {
                   border: Border.all(color: warmTangerine.withOpacity(0.5)),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: _isUploadingImage
-                    // ── Loading ──
-                    ? Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          CircularProgressIndicator(color: warmTangerine),
-                          const SizedBox(height: 12),
-                          Text(
-                            'Uploading photo...',
-                            style: TextStyle(
-                              fontFamily: 'Afacad',
-                              color: warmTangerine,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ],
-                      )
-                    : _selectedImage != null
-                        // ── Preview ──
-                        ? Stack(
-                            fit: StackFit.expand,
-                            children: [
-                              Image.file(_selectedImage!, fit: BoxFit.cover),
-                              Positioned(
-                                top: 8,
-                                right: 8,
-                                child: GestureDetector(
-                                  onTap: () => setState(() => _selectedImage = null),
-                                  child: Container(
-                                    padding: const EdgeInsets.all(4),
-                                    decoration: const BoxDecoration(
-                                      color: Colors.black54,
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: const Icon(Icons.close,
-                                        color: Colors.white, size: 18),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          )
-                        // ── Empty ──
-                        : const Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Icons.image_outlined, size: 50, color: Colors.black26),
-                              SizedBox(height: 8),
-                              Text(
-                                'No photo added yet',
-                                style: TextStyle(
-                                  fontFamily: 'Afacad',
-                                  color: Colors.black38,
-                                  fontSize: 13,
-                                ),
-                              ),
-                            ],
-                          ),
+                child: const Icon(Icons.image_outlined,
+                    size: 50, color: Colors.black),
               ),
-            ),
 
               const SizedBox(height: 25),
 

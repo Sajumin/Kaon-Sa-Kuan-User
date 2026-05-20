@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class ReportCard extends StatelessWidget {
   final String text;
@@ -27,7 +26,8 @@ class ReportCard extends StatelessWidget {
       ),
       child: Text(
         text,
-        style: GoogleFonts.poppins(
+        style: const TextStyle(
+          fontFamily: 'Afacad',
           fontSize: 13,
           color: Colors.black87,
           height: 1.5,

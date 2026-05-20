@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../../models/restaurant_data.dart'; 
 import '../../widgets/chip.dart'; 
 //import '../../widgets/bottom_navbar.dart';
@@ -30,7 +29,8 @@ class RestaurantDetailPage extends StatelessWidget {
                   child: Text(
                     restaurant.name,
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.poppins(
+                    style: const TextStyle(
+                      fontFamily: 'Afacad',
                       color: Colors.white,
                       fontSize: 22,
                       fontWeight: FontWeight.w600,
@@ -95,7 +95,8 @@ class RestaurantDetailPage extends StatelessWidget {
                         Text(
                           restaurant.description ??
                               'No description available.',
-                          style: GoogleFonts.poppins(
+                          style: const TextStyle(
+                            fontFamily: 'Afacad',
                             fontSize: 13,
                             color: Colors.black87,
                             height: 1.6,

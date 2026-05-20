@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../../models/restaurant_data.dart';
 //import '../../widgets/bottom_navbar.dart';
 import '../../widgets/chip.dart';
@@ -92,7 +91,8 @@ class ResultPage extends StatelessWidget {
                           // Name
                           Text(
                             restaurant.name,
-                            style: GoogleFonts.poppins(
+                            style: const TextStyle(
+                              fontFamily: 'Afacad',
                               fontSize: 22,
                               fontWeight: FontWeight.w700,
                               color: themeColor,
@@ -135,7 +135,8 @@ class ResultPage extends StatelessWidget {
                           // Description
                           Text(
                             restaurant.description ?? 'No description available.',
-                            style: GoogleFonts.poppins(
+                            style: const TextStyle(
+                              fontFamily: 'Afacad',
                               fontSize: 13,
                               color: Colors.black87,
                               height: 1.6,
@@ -184,7 +185,8 @@ class ResultPage extends StatelessWidget {
                     ),
                     child: Text(
                       "Okay, I'll eat there!",
-                      style: GoogleFonts.poppins(
+                      style: const TextStyle(
+                        fontFamily: 'Afacad',
                         color: Colors.white,
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
@@ -209,7 +211,8 @@ class ResultPage extends StatelessWidget {
                     ),
                     child: Text(
                       "Nope! Need a new one!",
-                      style: GoogleFonts.poppins(
+                      style: const TextStyle(
+                        fontFamily: 'Afacad',
                         color: Colors.white,
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
@@ -262,7 +265,8 @@ class _SpeechBubble extends StatelessWidget {
           ),
           child: Text(
             text,
-            style: GoogleFonts.poppins(
+            style: const TextStyle(
+              fontFamily: 'Afacad',
               color: Colors.white,
               fontSize: 14,
               fontWeight: FontWeight.w500,

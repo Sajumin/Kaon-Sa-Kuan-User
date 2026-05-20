@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart'; 
 import '../../models/restaurant_data.dart';
 
 class RestaurantCard extends StatelessWidget {
@@ -64,7 +63,8 @@ class RestaurantCard extends StatelessWidget {
               children: [
                 Text(
                   restaurant.name,
-                  style: GoogleFonts.poppins(
+                  style: const TextStyle(
+                    fontFamily: 'Afacad',
                     fontSize: 18,
                     fontWeight: FontWeight.w700,
                   ),
@@ -79,8 +79,8 @@ class RestaurantCard extends StatelessWidget {
                     const SizedBox(width: 3),
                     Flexible(
                     child: Text(restaurant.location,
-                        style: GoogleFonts.poppins(
-                            color: themeColor, fontSize: 12),
+                        style: const TextStyle(
+                            fontFamily: 'Afacad', color: themeColor, fontSize: 12),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                       ),
@@ -91,8 +91,8 @@ class RestaurantCard extends StatelessWidget {
                     const SizedBox(width: 4),
                     Flexible(
                     child: Text(restaurant.price,
-                        style: GoogleFonts.poppins(
-                            color: themeColor, fontSize: 12),
+                        style: const TextStyle(
+                            fontFamily: 'Afacad', color: themeColor, fontSize: 12),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                           ),

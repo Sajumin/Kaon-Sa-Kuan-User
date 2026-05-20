@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'clickResto.dart';
 import 'decisions_page.dart';
 import '../../models/restaurant_data.dart';
@@ -68,7 +67,8 @@ class _UserHomepageState extends State<UserHomepage> {
                         children: [
                           Text(
                             'Good day, kuan.',
-                            style: GoogleFonts.poppins(
+                            style: const TextStyle(
+                              fontFamily: 'Afacad',
                               color: Colors.white,
                               fontSize: 22,
                               fontWeight: FontWeight.w700,
@@ -76,7 +76,8 @@ class _UserHomepageState extends State<UserHomepage> {
                           ),
                           Text(
                             'What are we craving today?',
-                            style: GoogleFonts.poppins(
+                            style: const TextStyle(
+                              fontFamily: 'Afacad',
                               color: Colors.white,
                               fontSize: 13,
                               fontWeight: FontWeight.w400,
@@ -131,8 +132,9 @@ class _UserHomepageState extends State<UserHomepage> {
                   TextField(
                     decoration: InputDecoration(
                       hintText: 'search for restaurant...',
-                      hintStyle: GoogleFonts.poppins(
-                        color: themeColor.withOpacity(0.7),
+                      hintStyle: const TextStyle(
+                        fontFamily: 'Afacad',
+                        color: themeColor,
                         fontSize: 13,
                       ),
                       prefixIcon: const Icon(Icons.search, color: themeColor),

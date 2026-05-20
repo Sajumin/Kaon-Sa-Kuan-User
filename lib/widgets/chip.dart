@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart'; 
 //import '../../screens/user/clickResto.dart';
 
 class InfoChip extends StatelessWidget {
@@ -17,8 +16,9 @@ class InfoChip extends StatelessWidget {
         const SizedBox(width: 4),
         Text(
           label,
-          style: GoogleFonts.poppins(
-            color: const Color(0xFFF28544),
+          style: const TextStyle(
+            fontFamily: 'Afacad',
+            color: Color(0xFFF28544),
             fontSize: 12,
           ),
         ),
@@ -42,8 +42,9 @@ class TagChip extends StatelessWidget {
       ),
       child: Text(
         label,
-        style: GoogleFonts.poppins(
-          color: const Color(0xFFF28544),
+        style: const TextStyle(
+          fontFamily: 'Afacad',
+          color: Color(0xFFF28544),
           fontSize: 12,
           fontWeight: FontWeight.w500,
         ),
