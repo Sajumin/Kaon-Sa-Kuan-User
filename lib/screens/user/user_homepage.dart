@@ -179,7 +179,8 @@ class _UserHomepageState extends State<UserHomepage> {
                                 crossAxisCount: crossAxisCount,
                                 crossAxisSpacing: 16,
                                 mainAxisSpacing: 16,
-                                childAspectRatio: crossAxisCount == 2 ? 0.85 : 1.4,
+                                //childAspectRatio: crossAxisCount == 2 ? 0.85 : 1.4,
+                                mainAxisExtent: 200, 
                               ),
                               itemCount: _restaurants.length,
                               itemBuilder: (context, index) {
