@@ -22,20 +22,6 @@ class ResultPage extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Column(
         children: [
-          // ── Top Bar ──
-          // SafeArea(
-          //   child: Padding(
-          //     padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
-          //     child: Row(
-          //       children: [
-          //         GestureDetector(
-          //           onTap: () => Navigator.pop(context),
-          //           child: const Icon(Icons.arrow_back, size: 24),
-          //         ),
-          //       ],
-          //     ),
-          //   ),
-          // ),
 
           // ── Speech Bubble + Mascot ──
           const Padding(
@@ -55,7 +41,7 @@ class ResultPage extends StatelessWidget {
                   radius: 50,
                   backgroundColor: Colors.transparent,
                   backgroundImage:
-                      const AssetImage('assets/images/pig_mascot.png'),
+                      const AssetImage('assets/images/og.png'),
                 ),
               ],
             ),

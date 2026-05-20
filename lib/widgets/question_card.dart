@@ -6,6 +6,7 @@ class QuestionScreen extends StatelessWidget {
   final int currentIndex;
   final int total;
   final List<String> choices;
+  final String mascotImage;
   final void Function(String) onChoiceTap;
   final VoidCallback onBack;
   final bool isTiebreaker;
@@ -23,6 +24,7 @@ class QuestionScreen extends StatelessWidget {
     required this.isTiebreaker,
     required this.onPrevious,
     required this.onNext, 
+    required this.mascotImage,
   });
 
   static const themeColor = Color(0xFFF28544);
@@ -112,15 +114,17 @@ class QuestionScreen extends StatelessWidget {
                 const SizedBox(height: 25),
 
                 // Speech bubble question
-                _SpeechBubble(text: questionText),
+                Center(
+                  child: _SpeechBubble(text: questionText),
+                ),
 
                 // Mascot circle — centered
                 Transform.translate(
-                  offset: const Offset(0, -15), // pops slightly below bubble
+                  offset: const Offset(0, 0), // pops slightly below bubble
                     child: CircleAvatar(
-                      radius: 111,
+                      radius: 70,
                       backgroundColor: Colors.transparent,
-                      backgroundImage: const AssetImage('assets/images/pig_mascot.png'),
+                      backgroundImage: AssetImage(mascotImage),
                       ),
                     ),
                   ],
@@ -133,17 +137,17 @@ class QuestionScreen extends StatelessWidget {
           decoration: BoxDecoration(
             color: themeColor,
             borderRadius: const BorderRadius.vertical(
-              top: Radius.circular(25),
+              top: Radius.circular(28),
             ),
           ),
-          padding: const EdgeInsets.fromLTRB(20, 20, 20, 15),
+          padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+          height: 280,
           child: GridView.count(
             crossAxisCount: 2,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            crossAxisSpacing: 15,
-            mainAxisSpacing: 10,
-            childAspectRatio: 2.4,
+            physics: const BouncingScrollPhysics(),
+            crossAxisSpacing: 12,
+            mainAxisSpacing: 12,
+            childAspectRatio: 2.8,
             children: choices
                 .map((choice) => _ChoiceButton(
                       label: choice,
@@ -235,7 +239,7 @@ class _ChoiceButton extends StatelessWidget {
       child: Container(
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: const Color(0xFFF5F5F5),
           borderRadius: BorderRadius.circular(16),
         ),
         child: Text(

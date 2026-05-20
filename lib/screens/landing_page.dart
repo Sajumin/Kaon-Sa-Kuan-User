@@ -81,7 +81,7 @@ class _LandingPageState extends State<LandingPage>
               child: SlideTransition(
                 position: _logoSlide,
                 child: Image.asset(
-                  'assets/images/pig_mascot.png',
+                  'assets/images/og.png',
                   //width: 400,
                   height: 180,
                   fit: BoxFit.contain,

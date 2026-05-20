@@ -93,12 +93,12 @@ class _UserHomepageState extends State<UserHomepage> {
                         MaterialPageRoute(builder: (_) => const FoodDecisionMaker()),
                       ),
                     child: Transform.translate(
-                      offset: const Offset(15, 30), // pops slightly below header
+                      offset: const Offset(5, 25), // pops slightly below header
                       child: CircleAvatar(
-                        radius: 45,
+                        radius: 40,
                         backgroundColor: Colors.white.withOpacity(0.0),
                         backgroundImage:
-                            const AssetImage('assets/images/pig_mascot.png'),
+                            const AssetImage('assets/images/og.png'),
                         ),
                       ),
                     ),
@@ -168,10 +168,30 @@ class _UserHomepageState extends State<UserHomepage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                            ..._restaurants.map((r) => RestaurantCard(
-                              restaurant: r,
-                              onTap: () => _onRestaurantTap(r),
-                        )),
+                            LayoutBuilder(
+                          builder: (context, constraints) {
+                            final crossAxisCount = constraints.maxWidth > 600 ? 2 : 1;
+
+                            return GridView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: crossAxisCount,
+                                crossAxisSpacing: 16,
+                                mainAxisSpacing: 16,
+                                childAspectRatio: crossAxisCount == 2 ? 0.85 : 1.4,
+                              ),
+                              itemCount: _restaurants.length,
+                              itemBuilder: (context, index) {
+                                final r = _restaurants[index];
+                                return RestaurantCard(
+                                  restaurant: r,
+                                  onTap: () => _onRestaurantTap(r),
+                                );
+                              },
+                            );
+                          },
+                        ),
                       ]
                     ),
                   ),
