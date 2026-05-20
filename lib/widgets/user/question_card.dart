@@ -11,6 +11,7 @@ class QuestionScreen extends StatelessWidget {
   final bool isTiebreaker;
   final VoidCallback? onPrevious;
   final VoidCallback? onNext; // optional — choices handle next normally
+  final String mascotImage;
 
   const QuestionScreen({
     super.key,
@@ -23,6 +24,7 @@ class QuestionScreen extends StatelessWidget {
     required this.isTiebreaker,
     required this.onPrevious,
     required this.onNext,
+    required this.mascotImage,
   });
 
   static const themeColor = Color(0xFFF28544);
@@ -120,7 +122,7 @@ class QuestionScreen extends StatelessWidget {
                   child: CircleAvatar(
                     radius: 111,
                     backgroundColor: Colors.transparent,
-                    backgroundImage: const AssetImage('assets/images/pig_mascot.png'),
+                    backgroundImage: AssetImage(mascotImage),
                   ),
                 ),
               ],

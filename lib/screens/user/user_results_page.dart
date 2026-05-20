@@ -39,7 +39,7 @@ class ResultPage extends StatelessWidget {
                   const CircleAvatar(
                     radius: 50,
                     backgroundColor: Colors.transparent,
-                    backgroundImage: AssetImage('assets/images/pig_mascot.png'),
+                    backgroundImage: AssetImage('assets/images/og.png'),
                   ),
                 ],
               ),

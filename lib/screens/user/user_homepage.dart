@@ -271,11 +271,11 @@ class _UserHomepageState extends State<UserHomepage> {
                 GestureDetector(
                   onTap: _openDecisionMaker,
                   child: Transform.translate(
-                    offset: const Offset(15, 30),
+                    offset: const Offset(5, 25),
                     child: const CircleAvatar(
                       radius: 45,
                       backgroundColor: Colors.transparent,
-                      backgroundImage: AssetImage('assets/images/pig_mascot.png'),
+                      backgroundImage: AssetImage('assets/images/og.png'),
                     ),
                   ),
                 ),

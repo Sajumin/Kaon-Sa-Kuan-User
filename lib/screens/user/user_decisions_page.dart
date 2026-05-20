@@ -7,6 +7,8 @@ import 'package:kaon_sa_kuan/screens/user/user_results_page.dart';
 import 'package:kaon_sa_kuan/widgets/user/modal_confirm.dart';
 import 'package:kaon_sa_kuan/widgets/user/question_card.dart';
 import 'package:kaon_sa_kuan/data/services/algorithm_result_service.dart';
+import 'package:kaon_sa_kuan/utils/constants/mascot_faces.dart';
+import 'dart:math';
 
 class FoodDecisionMaker extends StatefulWidget {
   const FoodDecisionMaker({super.key});
@@ -18,6 +20,13 @@ class FoodDecisionMaker extends StatefulWidget {
 class _FoodDecisionMakerState extends State<FoodDecisionMaker> {
   final RestaurantService _restaurantService = RestaurantService();
   final AlgorithmResultService _algorithmResultService = AlgorithmResultService();
+
+  final Random _random = Random();
+  late String _currentMascot = _randomMascot();
+
+  String _randomMascot() {
+    return MascotAssets.images[_random.nextInt(MascotAssets.images.length)];
+  }
 
   int _currentIndex = 0;
   String? _question2Answer;
@@ -43,7 +52,10 @@ class _FoodDecisionMakerState extends State<FoodDecisionMaker> {
     });
 
     if (_currentIndex < kQuestions.length - 1) {
-      setState(() => _currentIndex++);
+      setState(() {
+        _currentIndex++;
+        _currentMascot = _randomMascot();
+      });
       return;
     }
 
@@ -99,6 +111,7 @@ class _FoodDecisionMakerState extends State<FoodDecisionMaker> {
     setState(() {
       _currentIndex = 0;
       _question2Answer = null;
+      _currentMascot = _randomMascot();
       _answers = List.filled(kQuestions.length, null);
     });
   }
@@ -111,7 +124,10 @@ class _FoodDecisionMakerState extends State<FoodDecisionMaker> {
 
   void _onNext() {
     if (_currentIndex < kQuestions.length - 1) {
-      setState(() => _currentIndex++);
+      setState(() {
+        _currentIndex++;
+        _currentMascot = _randomMascot();
+      });
     }
   }
 
@@ -149,6 +165,7 @@ class _FoodDecisionMakerState extends State<FoodDecisionMaker> {
         onPrevious: _currentIndex > 0 ? _onPrevious : null,
         onNext: _answers[_currentIndex] != null ? _onNext : null,
         isTiebreaker: _currentQuestion.questionNumber == 6,
+        mascotImage: _currentMascot,
       ),
     );
   }
