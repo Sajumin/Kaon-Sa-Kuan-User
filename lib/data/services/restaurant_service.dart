@@ -17,6 +17,7 @@ class RestaurantService {
         .where('status', isEqualTo: 'approved')
         .where('createdByAdmin', isEqualTo: true)
         .where('approvedBy', isNotEqualTo: null)
+        .where('isStillOperating', isEqualTo: true)
         .snapshots()
         .map(
           (snapshot) => snapshot.docs

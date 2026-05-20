@@ -16,6 +16,7 @@ class Restaurant {
   final String? approvedBy;
   final String status;
   final bool createdByAdmin;
+  final bool isStillOperating;
 
   Restaurant({
     required this.id,
@@ -35,6 +36,7 @@ class Restaurant {
     this.approvedBy,
     required this.status,
     required this.createdByAdmin,
+    required this.isStillOperating,
   });
 
   String get priceRange => 'PHP $averageCostMin - PHP $averageCostMax';
@@ -64,6 +66,7 @@ class Restaurant {
     'approvedBy': approvedBy,
     'status': status,
     'createdByAdmin': createdByAdmin,
+    'isStillOperating': isStillOperating,
   };
 
   factory Restaurant.fromMap(String id, Map<String, dynamic> map) {
@@ -85,6 +88,7 @@ class Restaurant {
       approvedBy: map['approvedBy'] as String?,
       status: map['status'] ?? 'pending',
       createdByAdmin: map['createdByAdmin'] ?? false,
+      isStillOperating: map['isStillOperating'] ?? true,
     );
   }
 }

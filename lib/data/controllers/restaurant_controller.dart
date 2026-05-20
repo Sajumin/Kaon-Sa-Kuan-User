@@ -47,6 +47,7 @@ class RestaurantController {
       approvedBy: null,
       status: 'pending',
       createdByAdmin: false,
+      isStillOperating: true,
     );
 
     await _restaurantService.addRestaurant(restaurant);
