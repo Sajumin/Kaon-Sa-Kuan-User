@@ -139,20 +139,28 @@ class QuestionScreen extends StatelessWidget {
             ),
           ),
           padding: const EdgeInsets.fromLTRB(20, 20, 20, 15),
-          child: GridView.count(
-            crossAxisCount: 2,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            crossAxisSpacing: 15,
-            mainAxisSpacing: 10,
-            childAspectRatio: 2.4,
-            children: choices
-                .map((choice) => _ChoiceButton(
-              label: choice,
-              onTap: () => onChoiceTap(choice),
-            ))
-                .toList(),
-          ),
+          child: SizedBox(
+            height: 280,
+            child: GridView.builder(
+              padding: EdgeInsets.zero,
+              physics: const BouncingScrollPhysics(),
+              itemCount: choices.length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 12,
+                mainAxisSpacing: 12,
+                mainAxisExtent: 56,
+              ),
+              itemBuilder: (context, index) {
+                final choice = choices[index];
+
+                return _ChoiceButton(
+                  label: choice,
+                  onTap: () => onChoiceTap(choice),
+                );
+              },
+            ),
+          )
         ),
       ],
     );
@@ -235,14 +243,17 @@ class _ChoiceButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: const Color(0xFFF5F5F5),
           borderRadius: BorderRadius.circular(16),
         ),
         child: Text(
           label,
           textAlign: TextAlign.center,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
           style: GoogleFonts.poppins(
             fontSize: 13,
             fontWeight: FontWeight.w500,

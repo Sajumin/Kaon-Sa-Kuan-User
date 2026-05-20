@@ -405,27 +405,38 @@ class _UserHomepageState extends State<UserHomepage> {
                       ),
                     ),
                     Expanded(
-                      child: SingleChildScrollView(
+                      child: Padding(
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            if (visibleRestaurants.isEmpty)
-                              Center(
-                                child: Text(
-                                  'No matching restaurants found.',
-                                  style: GoogleFonts.poppins(color: Colors.grey),
-                                ),
-                              )
-                            else
-                              ...visibleRestaurants.map(
-                                    (restaurant) => RestaurantCard(
-                                  restaurant: restaurant,
-                                  onTap: () => _onRestaurantTap(restaurant),
-                                ),
+                          child: visibleRestaurants.isEmpty
+                            ? Center(
+                              child: Text(
+                                'No matching restaurants found.',
+                                style: GoogleFonts.poppins(color: Colors.grey),
                               ),
-                          ],
-                        ),
+                            )
+                            : LayoutBuilder(
+                              builder: (context, constraints) {
+                                final crossAxisCount = constraints.maxWidth > 600 ? 2 : 1;
+
+                                return GridView.builder(
+                                  itemCount: visibleRestaurants.length,
+                                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: crossAxisCount,
+                                    crossAxisSpacing: 16,
+                                    mainAxisSpacing: 16,
+                                    childAspectRatio: crossAxisCount == 2 ? 0.85 : 1.4,
+                                  ),
+                                  itemBuilder: (context, index) {
+                                    final restaurant = visibleRestaurants[index];
+
+                                    return RestaurantCard(
+                                      restaurant: restaurant,
+                                      onTap: () => _onRestaurantTap(restaurant),
+                                    );
+                                  },
+                                );
+                              },
+                            ),
                       ),
                     ),
                   ],
