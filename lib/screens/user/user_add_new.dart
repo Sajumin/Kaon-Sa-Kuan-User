@@ -28,12 +28,14 @@ class _AddRestaurantPage extends State<AddRestaurantPage> {
   // Text Controllers
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
-  final TextEditingController _averageMinCostController = TextEditingController();
-  final TextEditingController _averageMaxCostController = TextEditingController();
+  final TextEditingController _averageMinCostController =
+      TextEditingController();
+  final TextEditingController _averageMaxCostController =
+      TextEditingController();
   final TextEditingController _facebookPageController = TextEditingController();
 
-  String _selectedLocation = RestaurantOptions.locations.first;
-  String _selectedFoodCategory = RestaurantOptions.foodCategories.first;
+  String? _selectedLocation;
+  String? _selectedFoodCategory;
   String _openTime = '06:00';
   String _closeTime = '20:00';
 
@@ -140,13 +142,15 @@ class _AddRestaurantPage extends State<AddRestaurantPage> {
                 label: 'Where is it located?',
                 value: _selectedLocation,
                 options: RestaurantOptions.locations,
-                onChanged: (value) => setState(() => _selectedLocation = value!),
+                onChanged: (value) =>
+                    setState(() => _selectedLocation = value!),
               ),
               _buildDropdown(
                 label: 'What kind of place is it?',
                 value: _selectedFoodCategory,
                 options: RestaurantOptions.foodCategories,
-                onChanged: (value) => setState(() => _selectedFoodCategory = value!),
+                onChanged: (value) =>
+                    setState(() => _selectedFoodCategory = value!),
               ),
               _buildTextField(
                 'Cheapest meal here',
@@ -198,7 +202,9 @@ class _AddRestaurantPage extends State<AddRestaurantPage> {
                     color: warmTangerine,
                   ),
                   label: Text(
-                    _isUploadingImage ? 'Uploading photo...' : 'Click to Add Photo',
+                    _isUploadingImage
+                        ? 'Uploading photo...'
+                        : 'Click to Add Photo',
                     style: const TextStyle(
                       fontFamily: 'Afacad',
                       color: warmTangerine,
@@ -220,73 +226,73 @@ class _AddRestaurantPage extends State<AddRestaurantPage> {
                   borderRadius: BorderRadius.circular(10),
                   child: _isUploadingImage
                       ? Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      CircularProgressIndicator(color: warmTangerine),
-                      SizedBox(height: 12),
-                      Text(
-                        'Uploading photo...',
-                        style: TextStyle(
-                          fontFamily: 'Afacad',
-                          color: warmTangerine,
-                          fontSize: 14,
-                        ),
-                      ),
-                    ],
-                  )
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            CircularProgressIndicator(color: warmTangerine),
+                            SizedBox(height: 12),
+                            Text(
+                              'Uploading photo...',
+                              style: TextStyle(
+                                fontFamily: 'Afacad',
+                                color: warmTangerine,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ],
+                        )
                       : _selectedImage != null
-                      ? Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      Image.file(
-                        _selectedImage!,
-                        fit: BoxFit.cover,
-                      ),
-                      Positioned(
-                        top: 8,
-                        right: 8,
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _selectedImage = null;
-                              _imageUrl = '';
-                            });
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.all(4),
-                            decoration: const BoxDecoration(
-                              color: Colors.black54,
-                              shape: BoxShape.circle,
+                          ? Stack(
+                              fit: StackFit.expand,
+                              children: [
+                                Image.file(
+                                  _selectedImage!,
+                                  fit: BoxFit.cover,
+                                ),
+                                Positioned(
+                                  top: 8,
+                                  right: 8,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        _selectedImage = null;
+                                        _imageUrl = '';
+                                      });
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.all(4),
+                                      decoration: const BoxDecoration(
+                                        color: Colors.black54,
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: const Icon(
+                                        Icons.close,
+                                        color: Colors.white,
+                                        size: 18,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                          : const Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.image_outlined,
+                                  size: 50,
+                                  color: Colors.black26,
+                                ),
+                                SizedBox(height: 8),
+                                Text(
+                                  'No photo added yet',
+                                  style: TextStyle(
+                                    fontFamily: 'Afacad',
+                                    color: Colors.black38,
+                                    fontSize: 13,
+                                  ),
+                                ),
+                              ],
                             ),
-                            child: const Icon(
-                              Icons.close,
-                              color: Colors.white,
-                              size: 18,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
-                      : const Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.image_outlined,
-                        size: 50,
-                        color: Colors.black26,
-                      ),
-                      SizedBox(height: 8),
-                      Text(
-                        'No photo added yet',
-                        style: TextStyle(
-                          fontFamily: 'Afacad',
-                          color: Colors.black38,
-                          fontSize: 13,
-                        ),
-                      ),
-                    ],
-                  ),
                 ),
               ),
 
@@ -314,31 +320,46 @@ class _AddRestaurantPage extends State<AddRestaurantPage> {
                           icon: Icons.restaurant_rounded,
                           iconColor: kApproveGreen,
                           iconBgColor: kApproveGreenBg,
-
                           title: 'Submit Restaurant?',
                           message:
-                          'Are you sure you want to submit this restaurant for review?',
-
+                              'Are you sure you want to submit this restaurant for review?',
                           confirmLabel: 'Yes, submit it.',
                           confirmColor: kApproveGreen,
                           confirmBgColor: kApproveGreenBg,
-
                           onConfirm: () async {
                             Navigator.pop(context);
 
-                            final averageMinCost = int.tryParse(_averageMinCostController.text.trim());
-                            final averageMaxCost = int.tryParse(_averageMaxCostController.text.trim());
+                            final averageMinCost = int.tryParse(
+                                _averageMinCostController.text.trim());
+                            final averageMaxCost = int.tryParse(
+                                _averageMaxCostController.text.trim());
 
-                            if (averageMinCost == null || averageMaxCost == null) {
+                            if (averageMinCost == null ||
+                                averageMaxCost == null) {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Please enter valid meal prices.')),
+                                const SnackBar(
+                                    content: Text(
+                                        'Please enter valid meal prices.')),
                               );
                               return;
                             }
 
                             if (averageMaxCost < averageMinCost) {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Priciest meal should be higher than cheapest meal.')),
+                                const SnackBar(
+                                    content: Text(
+                                        'Priciest meal should be higher than cheapest meal.')),
+                              );
+                              return;
+                            }
+
+                            if (_selectedLocation == null ||
+                                _selectedFoodCategory == null) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                      'Please select a location and food category.'),
+                                ),
                               );
                               return;
                             }
@@ -347,21 +368,27 @@ class _AddRestaurantPage extends State<AddRestaurantPage> {
                                 _selectedBudgetTags.isEmpty ||
                                 _selectedMealTags.isEmpty) {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Please choose food, budget, and meal tags.')),
+                                const SnackBar(
+                                    content: Text(
+                                        'Please choose food, budget, and meal tags.')),
                               );
                               return;
                             }
 
                             if (_isUploadingImage) {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Please wait for the image to finish uploading.')),
+                                const SnackBar(
+                                    content: Text(
+                                        'Please wait for the image to finish uploading.')),
                               );
                               return;
                             }
 
                             if (_selectedImage != null && _imageUrl.isEmpty) {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Image upload failed. Please choose the photo again.')),
+                                const SnackBar(
+                                    content: Text(
+                                        'Image upload failed. Please choose the photo again.')),
                               );
                               return;
                             }
@@ -370,8 +397,8 @@ class _AddRestaurantPage extends State<AddRestaurantPage> {
                               await _restaurantController.addRestaurant(
                                 name: _nameController.text,
                                 description: _descriptionController.text,
-                                location: _selectedLocation,
-                                foodCategory: _selectedFoodCategory,
+                                location: _selectedLocation!,
+                                foodCategory: _selectedFoodCategory!,
                                 foodType: _selectedFoodTypes.toList(),
                                 averageCostMin: averageMinCost,
                                 averageCostMax: averageMaxCost,
@@ -390,7 +417,8 @@ class _AddRestaurantPage extends State<AddRestaurantPage> {
                                 barrierDismissible: false,
                                 builder: (dialogContext) => UserSuccessModal(
                                   title: 'Request Sent!',
-                                  message: 'Your restaurant has been submitted for admin review!',
+                                  message:
+                                      'Your restaurant has been submitted for admin review!',
                                   onPressed: () {
                                     Navigator.pop(dialogContext);
                                     Navigator.pop(context);
@@ -401,7 +429,9 @@ class _AddRestaurantPage extends State<AddRestaurantPage> {
                               if (!mounted) return;
 
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('Failed to submit restaurant: $e')),
+                                SnackBar(
+                                    content: Text(
+                                        'Failed to submit restaurant: $e')),
                               );
                             }
                           },
@@ -431,21 +461,21 @@ class _AddRestaurantPage extends State<AddRestaurantPage> {
   }
 
   TextStyle get _fieldTextStyle => const TextStyle(
-    fontFamily: 'Afacad',
-    fontSize: 16,
-    color: Colors.black87,
-  );
+        fontFamily: 'Afacad',
+        fontSize: 16,
+        color: Colors.black87,
+      );
 
   TextStyle get _fieldHintStyle => TextStyle(
-    fontFamily: 'Afacad',
-    color: warmTangerine.withOpacity(0.5),
-    fontStyle: FontStyle.italic,
-  );
+        fontFamily: 'Afacad',
+        color: warmTangerine.withOpacity(0.5),
+        fontStyle: FontStyle.italic,
+      );
 
   InputBorder get _fieldBorder => OutlineInputBorder(
-    borderSide: const BorderSide(color: warmTangerine),
-    borderRadius: BorderRadius.circular(8),
-  );
+        borderSide: const BorderSide(color: warmTangerine),
+        borderRadius: BorderRadius.circular(8),
+      );
 
   InputDecoration _fieldDecoration(String label) {
     return InputDecoration(
@@ -492,11 +522,11 @@ class _AddRestaurantPage extends State<AddRestaurantPage> {
   }
 
   Widget _buildTextField(
-      String hint, {
-        int maxLines = 1,
-        required TextEditingController controller,
-        TextInputType keyboardType = TextInputType.text,
-      }) {
+    String hint, {
+    int maxLines = 1,
+    required TextEditingController controller,
+    TextInputType keyboardType = TextInputType.text,
+  }) {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       child: TextField(
@@ -511,7 +541,7 @@ class _AddRestaurantPage extends State<AddRestaurantPage> {
 
   Widget _buildDropdown({
     required String label,
-    required String value,
+    required String? value,
     required List<String> options,
     required ValueChanged<String?> onChanged,
   }) {
@@ -523,13 +553,17 @@ class _AddRestaurantPage extends State<AddRestaurantPage> {
         style: _fieldTextStyle,
         dropdownColor: Colors.white,
         iconEnabledColor: warmTangerine,
+        hint: Text(
+          label, // ← shows as placeholder when value is null
+          style: _fieldHintStyle,
+        ),
         items: options
             .map(
               (option) => DropdownMenuItem(
-            value: option,
-            child: Text(option, style: _fieldTextStyle),
-          ),
-        )
+                value: option,
+                child: Text(option, style: _fieldTextStyle),
+              ),
+            )
             .toList(),
         onChanged: onChanged,
       ),

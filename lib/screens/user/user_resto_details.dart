@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kaon_sa_kuan/models/restaurant.dart';
 import 'package:kaon_sa_kuan/widgets/user/user_icon_chip.dart';
@@ -7,12 +8,25 @@ import 'package:kaon_sa_kuan/widgets/user/user_icon_chip.dart';
 class RestaurantDetailPage extends StatelessWidget {
   final Restaurant restaurant;
 
+  Future<void> _launchURL(String url) async {
+    final uri = Uri.parse(url);
+
+    if (url.isEmpty) return;
+
+    await launchUrl(
+      uri,
+      mode: LaunchMode.externalApplication,
+    );
+  }
+
   const RestaurantDetailPage({super.key, required this.restaurant});
 
   static const themeColor = Color(0xFFF28544);
 
   @override
   Widget build(BuildContext context) {
+    final facebookUrl = restaurant.facebookPage ?? '';
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
@@ -41,7 +55,6 @@ class RestaurantDetailPage extends StatelessWidget {
               ],
             ),
           ),
-
           Expanded(
             child: SingleChildScrollView(
               child: Column(
@@ -49,14 +62,13 @@ class RestaurantDetailPage extends StatelessWidget {
                 children: [
                   restaurant.imageUrl.isNotEmpty
                       ? Image.network(
-                    restaurant.imageUrl,
-                    height: 200,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) => _imagePlaceholder(),
-                  )
+                          restaurant.imageUrl,
+                          height: 200,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                          errorBuilder: (_, __, ___) => _imagePlaceholder(),
+                        )
                       : _imagePlaceholder(),
-
                   Padding(
                     padding: const EdgeInsets.all(20),
                     child: Column(
@@ -80,7 +92,8 @@ class RestaurantDetailPage extends StatelessWidget {
                           children: [
                             InfoChip(
                               icon: Icons.access_time_outlined,
-                              label: '${formatTime12Hour(restaurant.openTime)} - ${formatTime12Hour(restaurant.closeTime)}',
+                              label:
+                                  '${formatTime12Hour(restaurant.openTime)} - ${formatTime12Hour(restaurant.closeTime)}',
                             ),
                             const SizedBox(width: 100),
                             InfoChip(
@@ -89,9 +102,7 @@ class RestaurantDetailPage extends StatelessWidget {
                             ),
                           ],
                         ),
-
                         const SizedBox(height: 20),
-
                         Text(
                           restaurant.description.isNotEmpty
                               ? restaurant.description
@@ -102,9 +113,47 @@ class RestaurantDetailPage extends StatelessWidget {
                             height: 1.6,
                           ),
                         ),
-
-                        const SizedBox(height: 20),
-
+                        const SizedBox(height: 15),
+                        if (facebookUrl.isNotEmpty)
+                          GestureDetector(
+                            onTap: () => _launchURL(facebookUrl),
+                            child: Text.rich(
+                              TextSpan(
+                                children: [
+                                  const TextSpan(
+                                    text: 'Facebook Link: ',
+                                    style: TextStyle(
+                                      fontFamily: 'Afacad',
+                                      fontSize: 14,
+                                      color: Colors.black87,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: facebookUrl,
+                                    style: const TextStyle(
+                                      fontFamily: 'Afacad',
+                                      fontSize: 14,
+                                      color: Color.fromARGB(255, 2, 11,
+                                          143), // 👈 ONLY this part is colored
+                                      decoration: TextDecoration.underline,
+                                      decorationColor:
+                                          Color.fromARGB(255, 2, 11, 143),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )
+                        else
+                          const Text(
+                            'Facebook Page: Not available',
+                            style: TextStyle(
+                              fontFamily: 'Afacad',
+                              fontSize: 14,
+                              color: Colors.black54,
+                            ),
+                          ),
+                        const SizedBox(height: 15),
                         if (restaurant.tags.isNotEmpty)
                           Wrap(
                             spacing: 8,
@@ -136,12 +185,11 @@ class RestaurantDetailPage extends StatelessWidget {
     final hour12 = hour == 0
         ? 12
         : hour > 12
-        ? hour - 12
-        : hour;
+            ? hour - 12
+            : hour;
 
     return '$hour12:$minute $period';
   }
-
 
   Widget _imagePlaceholder() {
     return Container(
