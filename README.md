@@ -1,4 +1,24 @@
+<div align="center">
+
+<img src="assets/images/og.png" alt="Kaon Sa Kuan Banner" width="25%"/>
+
 # Kaon Sa Kuan
+
+### *“Ta, Kaon Sa Kuan?“*
+
+A Flutter-based food recommendation app for discovering local restaurants in Miagao through an interactive question-and-answer experience inspired by Akinator.
+
+![Flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)
+![Dart](https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white)
+![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)
+![Cloudinary](https://img.shields.io/badge/Cloudinary-3448C5?style=for-the-badge&logo=cloudinary&logoColor=white)
+![Android](https://img.shields.io/badge/Platform-Android-green?style=for-the-badge)
+
+</div>
+
+---
+
+## About the Project
 
 Kaon Sa Kuan is a Flutter food decision app made as a final project output for CMSC 156. 
 Kaon Sa Kuan helps users decide where to eat in local restaurants in Miagao by asking a series of guided questions, similar to how the Akinator works. 
