@@ -80,7 +80,7 @@ class RestaurantDetailPage extends StatelessWidget {
                           children: [
                             InfoChip(
                               icon: Icons.access_time_outlined,
-                              label: restaurant.openingHours,
+                              label: '${formatTime12Hour(restaurant.openTime)} - ${formatTime12Hour(restaurant.closeTime)}',
                             ),
                             const SizedBox(width: 100),
                             InfoChip(
@@ -124,6 +124,24 @@ class RestaurantDetailPage extends StatelessWidget {
       ),
     );
   }
+
+  String formatTime12Hour(String time) {
+    final parts = time.split(':');
+    if (parts.length != 2) return time;
+
+    final hour = int.tryParse(parts[0]) ?? 0;
+    final minute = parts[1];
+
+    final period = hour >= 12 ? 'PM' : 'AM';
+    final hour12 = hour == 0
+        ? 12
+        : hour > 12
+        ? hour - 12
+        : hour;
+
+    return '$hour12:$minute $period';
+  }
+
 
   Widget _imagePlaceholder() {
     return Container(
