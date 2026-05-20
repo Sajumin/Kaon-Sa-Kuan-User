@@ -115,7 +115,7 @@ class QuestionScreen extends StatelessWidget {
 
                 // Speech bubble question
                 Center(
-                  child: _SpeechBubble(text: questionText),
+                   child: _SpeechBubble(text: questionText),
                 ),
 
                 // Mascot circle — centered

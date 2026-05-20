@@ -21,7 +21,6 @@ class RestaurantCard extends StatelessWidget {
       child: SizedBox(
         height: 200, 
       child: Container(
-      //margin: const EdgeInsets.only(bottom: 20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(24),
         border: Border.all(color: themeColor.withOpacity(0.4)),
@@ -35,12 +34,14 @@ class RestaurantCard extends StatelessWidget {
         ],
       ),
       child: Column(
-        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Image placeholder
-          Container(
-            height: 110,
+          Expanded(
+          flex: 3, 
+          child: Container(
+            //height: 110,
+            width: double.infinity,
             decoration: const BoxDecoration(
               color: Color(0xFFFDF0E8),
               borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
@@ -50,12 +51,16 @@ class RestaurantCard extends StatelessWidget {
                   color: themeColor.withOpacity(0.3), size: 48),
             ),
           ),
+        ),
 
           // Info
-          Padding(
+          Expanded(
+            flex: 2, 
+            child: Padding(
             padding: const EdgeInsets.fromLTRB(16, 12, 16, 14),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   restaurant.name,
@@ -63,28 +68,41 @@ class RestaurantCard extends StatelessWidget {
                     fontSize: 18,
                     fontWeight: FontWeight.w700,
                   ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
-                const SizedBox(height: 6),
+                const SizedBox(height: 4),
                 Row(
                   children: [
                     const Icon(Icons.location_on_outlined,
                         size: 15, color: themeColor),
                     const SizedBox(width: 3),
-                    Text(restaurant.location,
+                    Flexible(
+                    child: Text(restaurant.location,
                         style: GoogleFonts.poppins(
-                            color: themeColor, fontSize: 12)),
-                    const SizedBox(width: 25),
+                            color: themeColor, fontSize: 12),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                      ),
+                  ),
+                    const SizedBox(width: 12),
                     const Icon(Icons.payments_outlined,
                         size: 15, color: themeColor),
                     const SizedBox(width: 4),
-                    Text(restaurant.price,
+                    Flexible(
+                    child: Text(restaurant.price,
                         style: GoogleFonts.poppins(
-                            color: themeColor, fontSize: 12)),
-                    ],
-                  ),
-                ],
+                            color: themeColor, fontSize: 12),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
+            )
           ],
         ),
       ),
