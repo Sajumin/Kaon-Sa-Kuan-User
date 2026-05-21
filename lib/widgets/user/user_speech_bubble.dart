@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class SpeechBubble extends StatelessWidget {
   final String text;
@@ -26,7 +25,8 @@ class SpeechBubble extends StatelessWidget {
           ),
           child: Text(
             text,
-            style: GoogleFonts.poppins(
+            style: const TextStyle(
+              fontFamily: 'Afacad',
               color: Colors.white,
               fontSize: 12,
             ),

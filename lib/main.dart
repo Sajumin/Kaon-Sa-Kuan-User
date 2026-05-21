@@ -17,6 +17,7 @@ class KaonSaKuanApp extends StatelessWidget {
       title: 'Kaon sa Kuan',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        fontFamily: 'Afacad',
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF8BC349)),
         useMaterial3: true,
       ),

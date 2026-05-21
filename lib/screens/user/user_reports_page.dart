@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../../widgets/user/user_report_card.dart';
 import 'package:kaon_sa_kuan/models/report.dart';
 import 'package:kaon_sa_kuan/data/services/report_service.dart';
@@ -51,9 +50,10 @@ class _UserReportsPageState extends State<UserReportsPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         'Community Reports',
-                        style: GoogleFonts.poppins(
+                        style: TextStyle(
+                          fontFamily: 'Afacad',
                           color: Colors.white,
                           fontSize: 20,
                           fontWeight: FontWeight.w700,
@@ -61,7 +61,8 @@ class _UserReportsPageState extends State<UserReportsPage> {
                       ),
                       Text(
                         'Help keep restaurants accurate.',
-                        style: GoogleFonts.poppins(
+                        style: TextStyle(
+                          fontFamily: 'Afacad',
                           color: Colors.white.withOpacity(0.85),
                           fontSize: 12,
                         ),
@@ -84,7 +85,8 @@ class _UserReportsPageState extends State<UserReportsPage> {
                       ),
                       child: Text(
                         '$count reports',
-                        style: GoogleFonts.poppins(
+                        style: const TextStyle(
+                          fontFamily: 'Afacad',
                           color: Colors.white,
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
@@ -112,10 +114,10 @@ class _UserReportsPageState extends State<UserReportsPage> {
                 final reports = snapshot.data ?? [];
 
                 if (reports.isEmpty) {
-                  return Center(
+                  return const Center(
                     child: Text(
                       'No reports yet. Be the first!',
-                      style: GoogleFonts.poppins(color: Colors.grey, fontSize: 13),
+                      style: TextStyle(fontFamily: 'Afacad',color: Colors.grey, fontSize: 13),
                     ),
                   );
                 }
@@ -160,7 +162,8 @@ class _UserReportsPageState extends State<UserReportsPage> {
                     onSubmitted: (_) => _submitReport(),
                     decoration: InputDecoration(
                       hintText: 'Post an anonymous report...',
-                      hintStyle: GoogleFonts.poppins(
+                      hintStyle: TextStyle(
+                        fontFamily: 'Afacad',
                         color: themeColor.withOpacity(0.5),
                         fontSize: 13,
                       ),

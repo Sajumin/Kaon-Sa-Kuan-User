@@ -44,7 +44,8 @@ class RestaurantDetailPage extends StatelessWidget {
                   child: Text(
                     restaurant.name,
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.poppins(
+                    style: const TextStyle (
+                      fontFamily: 'Afacad',
                       color: Colors.white,
                       fontSize: 22,
                       fontWeight: FontWeight.w600,
@@ -107,7 +108,8 @@ class RestaurantDetailPage extends StatelessWidget {
                           restaurant.description.isNotEmpty
                               ? restaurant.description
                               : 'No description available.',
-                          style: GoogleFonts.poppins(
+                          style: const TextStyle(
+                            fontFamily: 'Afacad',
                             fontSize: 13,
                             color: Colors.black87,
                             height: 1.6,

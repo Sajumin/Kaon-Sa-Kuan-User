@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:kaon_sa_kuan/data/services/restaurant_service.dart';
 import 'package:kaon_sa_kuan/models/restaurant.dart';
 import 'package:kaon_sa_kuan/screens/user/user_decisions_page.dart';
@@ -81,10 +80,11 @@ class _UserHomepageState extends State<UserHomepage> {
                     const SizedBox(height: 18),
                     Row(
                       children: [
-                        Expanded(
+                        const Expanded(
                           child: Text(
                             'Filter restaurants',
-                            style: GoogleFonts.poppins(
+                            style: TextStyle(
+                              fontFamily: 'Afacad',
                               color: themeColor,
                               fontSize: 18,
                               fontWeight: FontWeight.w700,
@@ -98,9 +98,10 @@ class _UserHomepageState extends State<UserHomepage> {
                               tempFoodTypeFilter = null;
                             });
                           },
-                          child: Text(
+                          child: const Text(
                             'Clear',
-                            style: GoogleFonts.poppins(
+                            style: TextStyle(
+                              fontFamily: 'Afacad',
                               color: themeColor,
                               fontWeight: FontWeight.w600,
                             ),
@@ -109,9 +110,10 @@ class _UserHomepageState extends State<UserHomepage> {
                       ],
                     ),
                     const SizedBox(height: 14),
-                    Text(
+                    const Text(
                       'Location',
-                      style: GoogleFonts.poppins(
+                      style: TextStyle(
+                        fontFamily: 'Afacad',
                         color: themeColor,
                         fontSize: 14,
                         fontWeight: FontWeight.w700,
@@ -137,9 +139,10 @@ class _UserHomepageState extends State<UserHomepage> {
                       ),
                     ]),
                     const SizedBox(height: 20),
-                    Text(
+                    const Text(
                       'Food type',
-                      style: GoogleFonts.poppins(
+                      style: TextStyle(
+                        fontFamily: 'Afacad',
                         color: themeColor,
                         fontSize: 14,
                         fontWeight: FontWeight.w700,
@@ -182,9 +185,10 @@ class _UserHomepageState extends State<UserHomepage> {
                             borderRadius: BorderRadius.circular(14),
                           ),
                         ),
-                        child: Text(
+                        child: const Text(
                           'Apply filters',
-                          style: GoogleFonts.poppins(
+                          style: TextStyle(
+                            fontFamily: 'Afacad',
                             color: Colors.white,
                             fontWeight: FontWeight.w700,
                           ),
@@ -243,15 +247,16 @@ class _UserHomepageState extends State<UserHomepage> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Expanded(
+                const Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
+                    padding: EdgeInsets.only(bottom: 10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           'Good day, kuan.',
-                          style: GoogleFonts.poppins(
+                          style: TextStyle(
+                            fontFamily: 'Afacad',
                             color: Colors.white,
                             fontSize: 22,
                             fontWeight: FontWeight.w700,
@@ -259,7 +264,8 @@ class _UserHomepageState extends State<UserHomepage> {
                         ),
                         Text(
                           'What are we craving today?',
-                          style: GoogleFonts.poppins(
+                          style: TextStyle(
+                            fontFamily: 'Afacad',
                             color: Colors.white,
                             fontSize: 13,
                           ),
@@ -360,7 +366,8 @@ class _UserHomepageState extends State<UserHomepage> {
                               },
                               decoration: InputDecoration(
                                 hintText: 'search for restaurant...',
-                                hintStyle: GoogleFonts.poppins(
+                                hintStyle: TextStyle(
+                                  fontFamily: 'Afacad',
                                   color: themeColor.withOpacity(0.7),
                                   fontSize: 13,
                                 ),
@@ -408,10 +415,10 @@ class _UserHomepageState extends State<UserHomepage> {
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                           child: visibleRestaurants.isEmpty
-                            ? Center(
+                            ? const Center(
                               child: Text(
                                 'No restaurants found.',
-                                style: GoogleFonts.poppins(color: Colors.grey),
+                                style: TextStyle(fontFamily: 'Afacad',color: Colors.grey),
                               ),
                             )
                             : LayoutBuilder(
@@ -457,7 +464,8 @@ class _UserHomepageState extends State<UserHomepage> {
     return ChoiceChip(
       label: Text(
         label,
-        style: GoogleFonts.poppins(
+        style: TextStyle(
+          fontFamily: 'Afacad',
           color: isSelected ? Colors.white : themeColor,
           fontSize: 13,
           fontWeight: FontWeight.w600,

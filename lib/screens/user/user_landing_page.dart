@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../../widgets/user/user_nav_bar.dart';
 import 'package:kaon_sa_kuan/data/services/auth_service.dart';
 
@@ -122,7 +121,7 @@ class _LandingPageState extends State<LandingPage>
                   children: [
                     const Text(
                       "Can't decide where to eat?",
-                      style: TextStyle(color: Colors.white, fontSize: 16, fontFamily: 'Afacado'),
+                      style: TextStyle(color: Colors.white, fontSize: 16, fontFamily: 'Afacad'),
                     ),
                     const SizedBox(height: 12),
                     _ActionButton(
@@ -164,7 +163,7 @@ class _ActionButton extends StatelessWidget {
         ),
         child: Text(
           label,
-          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'Afacado'),
+          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'Afacad'),
         ),
       ),
     );

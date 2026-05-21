@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:kaon_sa_kuan/models/restaurant.dart';
 import 'package:kaon_sa_kuan/widgets/user/user_icon_chip.dart';
 
@@ -23,20 +22,20 @@ class ResultPage extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20, 12, 20, 0),
+          const Padding(
+            padding: EdgeInsets.fromLTRB(20, 12, 20, 0),
             child: SafeArea(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Flexible(
+                  Flexible(
                     child: _SpeechBubble(
                       text: 'This is the kainan perfect for you!',
                     ),
                   ),
-                  const SizedBox(width: 5),
-                  const CircleAvatar(
+                  SizedBox(width: 5),
+                  CircleAvatar(
                     radius: 50,
                     backgroundColor: Colors.transparent,
                     backgroundImage: AssetImage('assets/images/og.png'),
@@ -48,10 +47,10 @@ class ResultPage extends StatelessWidget {
           const SizedBox(height: 5),
           Expanded(
             child: selectedRestaurant == null
-                ? Center(
+                ? const Center(
               child: Text(
                 'No approved restaurants available yet.',
-                style: GoogleFonts.poppins(fontSize: 14),
+                style: TextStyle(fontFamily: 'Afacad',fontSize: 14),
               ),
             )
                 : SingleChildScrollView(
@@ -93,7 +92,8 @@ class ResultPage extends StatelessWidget {
                         children: [
                           Text(
                             selectedRestaurant.name,
-                            style: GoogleFonts.poppins(
+                            style:  const TextStyle(
+                              fontFamily: 'Afacad',
                               fontSize: 22,
                               fontWeight: FontWeight.w700,
                               color: themeColor,
@@ -123,7 +123,8 @@ class ResultPage extends StatelessWidget {
                             selectedRestaurant.description.isNotEmpty
                                 ? selectedRestaurant.description
                                 : 'No description available.',
-                            style: GoogleFonts.poppins(
+                            style: const TextStyle(
+                              fontFamily: 'Afacad',
                               fontSize: 13,
                               color: Colors.black87,
                               height: 1.6,
@@ -163,9 +164,10 @@ class ResultPage extends StatelessWidget {
                       ),
                       padding: const EdgeInsets.symmetric(vertical: 20),
                     ),
-                    child: Text(
+                    child: const Text(
                       "Okay, I'll eat there!",
-                      style: GoogleFonts.poppins(
+                      style: TextStyle(
+                        fontFamily: 'Afacad',
                         color: Colors.white,
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
@@ -185,9 +187,10 @@ class ResultPage extends StatelessWidget {
                       ),
                       padding: const EdgeInsets.symmetric(vertical: 20),
                     ),
-                    child: Text(
+                    child: const Text(
                       "Nope! Need a new one!",
-                      style: GoogleFonts.poppins(
+                      style: TextStyle(
+                        fontFamily: 'Afacad',
                         color: Colors.white,
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
@@ -242,7 +245,8 @@ class _SpeechBubble extends StatelessWidget {
           ),
           child: Text(
             text,
-            style: GoogleFonts.poppins(
+            style: const TextStyle(
+              fontFamily: 'Afacad',
               color: Colors.white,
               fontSize: 14,
               fontWeight: FontWeight.w500,

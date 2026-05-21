@@ -225,74 +225,74 @@ class _AddRestaurantPage extends State<AddRestaurantPage> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: _isUploadingImage
-                      ? Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            CircularProgressIndicator(color: warmTangerine),
-                            SizedBox(height: 12),
-                            Text(
-                              'Uploading photo...',
-                              style: TextStyle(
-                                fontFamily: 'Afacad',
-                                color: warmTangerine,
-                                fontSize: 14,
+                    ? const Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CircularProgressIndicator(color: warmTangerine),
+                        SizedBox(height: 12),
+                        Text(
+                          'Uploading photo...',
+                          style: TextStyle(
+                            fontFamily: 'Afacad',
+                            color: warmTangerine,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
+                    )
+                  : _selectedImage != null
+                    ? Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        Image.file(
+                          _selectedImage!,
+                          fit: BoxFit.cover,
+                        ),
+                        Positioned(
+                          top: 8,
+                          right: 8,
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _selectedImage = null;
+                                _imageUrl = '';
+                              });
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(4),
+                              decoration: const BoxDecoration(
+                                color: Colors.black54,
+                                shape: BoxShape.circle,
+                              ),
+                              child: const Icon(
+                                Icons.close,
+                                color: Colors.white,
+                                size: 18,
                               ),
                             ),
-                          ],
-                        )
-                      : _selectedImage != null
-                          ? Stack(
-                              fit: StackFit.expand,
-                              children: [
-                                Image.file(
-                                  _selectedImage!,
-                                  fit: BoxFit.cover,
-                                ),
-                                Positioned(
-                                  top: 8,
-                                  right: 8,
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        _selectedImage = null;
-                                        _imageUrl = '';
-                                      });
-                                    },
-                                    child: Container(
-                                      padding: const EdgeInsets.all(4),
-                                      decoration: const BoxDecoration(
-                                        color: Colors.black54,
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: const Icon(
-                                        Icons.close,
-                                        color: Colors.white,
-                                        size: 18,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )
-                          : const Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.image_outlined,
-                                  size: 50,
-                                  color: Colors.black26,
-                                ),
-                                SizedBox(height: 8),
-                                Text(
-                                  'No photo added yet',
-                                  style: TextStyle(
-                                    fontFamily: 'Afacad',
-                                    color: Colors.black38,
-                                    fontSize: 13,
-                                  ),
-                                ),
-                              ],
-                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  : const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.image_outlined,
+                        size: 50,
+                        color: Colors.black26,
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        'No photo added yet',
+                        style: TextStyle(
+                          fontFamily: 'Afacad',
+                          color: Colors.black38,
+                          fontSize: 13,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
 
