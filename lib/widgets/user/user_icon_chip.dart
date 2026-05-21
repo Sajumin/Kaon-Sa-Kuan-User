@@ -19,7 +19,7 @@ class InfoChip extends StatelessWidget {
           style: const TextStyle(
             fontFamily: 'Afacad',
             color: const Color(0xFFF28544),
-            fontSize: 12,
+            fontSize: 20,
           ),
         ),
       ],
@@ -45,10 +45,10 @@ class TagChip extends StatelessWidget {
         style: const TextStyle(
           fontFamily: 'Afacad',
           color: Color(0xFFF28544),
-          fontSize: 12,
+          fontSize: 20,
           fontWeight: FontWeight.w500,
         ),
       ),
     );
   }
-} 
+}

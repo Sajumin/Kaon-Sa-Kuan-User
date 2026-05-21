@@ -57,12 +57,12 @@ class QuestionScreen extends StatelessWidget {
                       child: Icon(
                         Icons.chevron_left,
                         size: 28,
-                        color: onPrevious != null ? Colors.black87 : Colors.transparent,
+                        color: onPrevious != null
+                            ? Colors.black87
+                            : Colors.transparent,
                       ),
                     ),
-
                     const SizedBox(width: 8),
-
                     Text(
                       'Question $currentIndex/$total',
                       style: const TextStyle(
@@ -72,15 +72,15 @@ class QuestionScreen extends StatelessWidget {
                         color: Colors.black87,
                       ),
                     ),
-
                     const SizedBox(width: 8),
-
                     GestureDetector(
                       onTap: onNext,
                       child: Icon(
                         Icons.chevron_right,
                         size: 28,
-                        color: onNext != null ? Colors.black87 : Colors.transparent,
+                        color: onNext != null
+                            ? Colors.black87
+                            : Colors.transparent,
                       ),
                     ),
                   ],
@@ -95,8 +95,7 @@ class QuestionScreen extends StatelessWidget {
                     value: currentIndex / total,
                     minHeight: 6,
                     backgroundColor: Colors.grey.shade200,
-                    valueColor:
-                    const AlwaysStoppedAnimation<Color>(themeColor),
+                    valueColor: const AlwaysStoppedAnimation<Color>(themeColor),
                   ),
                 ),
               ],
@@ -114,8 +113,9 @@ class QuestionScreen extends StatelessWidget {
                 const SizedBox(height: 25),
 
                 // Speech bubble question
-                _SpeechBubble(text: questionText),
-
+                Center(
+                  child: _SpeechBubble(text: questionText),
+                ),
                 // Mascot circle — centered
                 Transform.translate(
                   offset: const Offset(0, -15), // pops slightly below bubble
@@ -132,36 +132,35 @@ class QuestionScreen extends StatelessWidget {
 
         // ── Choices Panel ────────────────────────────────────────
         Container(
-          decoration: BoxDecoration(
-            color: themeColor,
-            borderRadius: const BorderRadius.vertical(
-              top: Radius.circular(25),
-            ),
-          ),
-          padding: const EdgeInsets.fromLTRB(20, 20, 20, 15),
-          child: SizedBox(
-            height: 280,
-            child: GridView.builder(
-              padding: EdgeInsets.zero,
-              physics: const BouncingScrollPhysics(),
-              itemCount: choices.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 12,
-                mainAxisSpacing: 12,
-                mainAxisExtent: 56,
+            decoration: BoxDecoration(
+              color: themeColor,
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(25),
               ),
-              itemBuilder: (context, index) {
-                final choice = choices[index];
-
-                return _ChoiceButton(
-                  label: choice,
-                  onTap: () => onChoiceTap(choice),
-                );
-              },
             ),
-          )
-        ),
+            padding: const EdgeInsets.fromLTRB(20, 20, 20, 15),
+            child: SizedBox(
+              height: 280,
+              child: GridView.builder(
+                padding: EdgeInsets.zero,
+                physics: const BouncingScrollPhysics(),
+                itemCount: choices.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 12,
+                  mainAxisSpacing: 12,
+                  mainAxisExtent: 56,
+                ),
+                itemBuilder: (context, index) {
+                  final choice = choices[index];
+
+                  return _ChoiceButton(
+                    label: choice,
+                    onTap: () => onChoiceTap(choice),
+                  );
+                },
+              ),
+            )),
       ],
     );
   }

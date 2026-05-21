@@ -28,7 +28,7 @@ class SpeechBubble extends StatelessWidget {
             style: const TextStyle(
               fontFamily: 'Afacad',
               color: Colors.white,
-              fontSize: 12,
+              fontSize: 18,
             ),
           ),
         ),

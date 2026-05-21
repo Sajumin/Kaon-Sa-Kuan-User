@@ -33,52 +33,53 @@ class RestaurantCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Restaurant Image with Placeholder Logic
+            // ── IMAGE ──────────────────────────
             ClipRRect(
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(24)),
               child: SizedBox(
                 height: 110,
                 width: double.infinity,
                 child: restaurant.imageUrl.trim().isEmpty
-                  ? Container(
-                    color: const Color(0xFFFDF0E8),
-                    child: Center(
-                      child: Icon(Icons.restaurant,
-                          color: themeColor.withOpacity(0.3), size: 48),
-                    ),
-                  )
-                  : Image.network(
-                    restaurant.imageUrl.trim(),
-                    fit: BoxFit.cover,
-                    loadingBuilder: (context, child, loadingProgress) {
-                      if (loadingProgress == null) return child;
-                      return Container(
+                    ? Container(
                         color: const Color(0xFFFDF0E8),
-                        child: const Center(
-                          child: SizedBox(
-                            width: 24,
-                            height: 24,
-                            child: CircularProgressIndicator(
-                              valueColor:
-                                  AlwaysStoppedAnimation<Color>(themeColor),
-                              strokeWidth: 2,
+                        child: Center(
+                          child: Icon(Icons.restaurant,
+                              color: themeColor.withOpacity(0.3), size: 48),
+                        ),
+                      )
+                    : Image.network(
+                        restaurant.imageUrl.trim(),
+                        fit: BoxFit.cover,
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return Container(
+                            color: const Color(0xFFFDF0E8),
+                            child: const Center(
+                              child: SizedBox(
+                                width: 24,
+                                height: 24,
+                                child: CircularProgressIndicator(
+                                  valueColor:
+                                      AlwaysStoppedAnimation<Color>(themeColor),
+                                  strokeWidth: 2,
+                                ),
+                              ),
                             ),
+                          );
+                        },
+                        errorBuilder: (context, error, stackTrace) => Container(
+                          color: const Color(0xFFFDF0E8),
+                          child: Center(
+                            child: Icon(Icons.broken_image,
+                                color: themeColor.withOpacity(0.3), size: 48),
                           ),
                         ),
-                      );
-                    },
-                    errorBuilder: (context, error, stackTrace) => Container(
-                      color: const Color(0xFFFDF0E8),
-                      child: Center(
-                        child: Icon(Icons.broken_image,
-                            color: themeColor.withOpacity(0.3), size: 48),
                       ),
-                    ),
-                  ),
               ),
             ),
 
-            // Info
+            // ── INFO ───────────────────────────
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 12, 16, 14),
               child: Column(
@@ -91,25 +92,41 @@ class RestaurantCard extends StatelessWidget {
                       fontSize: 18,
                       fontWeight: FontWeight.w700,
                     ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 6),
                   Row(
                     children: [
                       const Icon(Icons.location_on_outlined,
-                        size: 15, color: themeColor),
+                          size: 15, color: themeColor),
                       const SizedBox(width: 3),
-                      Text(restaurant.location,
-                        style: const TextStyle(
-                          fontFamily: 'Afacad',
-                          color: themeColor, fontSize: 12)),
-                      const SizedBox(width: 25),
+                      Flexible(
+                        child: Text(
+                          restaurant.location,
+                          style: const TextStyle(
+                              fontFamily: 'Afacad',
+                              color: themeColor,
+                              fontSize: 18),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
                       const Icon(Icons.payments_outlined,
-                        size: 15, color: themeColor),
+                          size: 15, color: themeColor),
                       const SizedBox(width: 4),
-                      Text(restaurant.priceRange,
-                        style: const TextStyle(
-                          fontFamily: 'Afacad',
-                          color: themeColor, fontSize: 12)),
+                      Flexible(
+                        child: Text(
+                          restaurant.priceRange,
+                          style: const TextStyle(
+                              fontFamily: 'Afacad',
+                              color: themeColor,
+                              fontSize: 18),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
                     ],
                   ),
                 ],

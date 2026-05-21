@@ -44,7 +44,7 @@ class RestaurantDetailPage extends StatelessWidget {
                   child: Text(
                     restaurant.name,
                     textAlign: TextAlign.center,
-                    style: const TextStyle (
+                    style: const TextStyle(
                       fontFamily: 'Afacad',
                       color: Colors.white,
                       fontSize: 22,
@@ -116,7 +116,7 @@ class RestaurantDetailPage extends StatelessWidget {
                               : 'No description available.',
                           style: const TextStyle(
                             fontFamily: 'Afacad',
-                            fontSize: 13,
+                            fontSize: 20,
                             color: Colors.black87,
                             height: 1.6,
                           ),
@@ -132,7 +132,7 @@ class RestaurantDetailPage extends StatelessWidget {
                                     text: 'Facebook Link: ',
                                     style: TextStyle(
                                       fontFamily: 'Afacad',
-                                      fontSize: 14,
+                                      fontSize: 18,
                                       color: Colors.black87,
                                     ),
                                   ),
@@ -140,9 +140,8 @@ class RestaurantDetailPage extends StatelessWidget {
                                     text: facebookUrl,
                                     style: const TextStyle(
                                       fontFamily: 'Afacad',
-                                      fontSize: 14,
-                                      color: Color.fromARGB(255, 2, 11,
-                                          143),
+                                      fontSize: 18,
+                                      color: Color.fromARGB(255, 2, 11, 143),
                                       decoration: TextDecoration.underline,
                                       decorationColor:
                                           Color.fromARGB(255, 2, 11, 143),
@@ -157,7 +156,7 @@ class RestaurantDetailPage extends StatelessWidget {
                             'Facebook Page: Not available',
                             style: TextStyle(
                               fontFamily: 'Afacad',
-                              fontSize: 14,
+                              fontSize: 18,
                               color: Colors.black54,
                             ),
                           ),

@@ -55,7 +55,7 @@ class _UserReportsPageState extends State<UserReportsPage> {
                         style: TextStyle(
                           fontFamily: 'Afacad',
                           color: Colors.white,
-                          fontSize: 20,
+                          fontSize: 25,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
@@ -64,7 +64,7 @@ class _UserReportsPageState extends State<UserReportsPage> {
                         style: TextStyle(
                           fontFamily: 'Afacad',
                           color: Colors.white.withOpacity(0.85),
-                          fontSize: 12,
+                          fontSize: 18,
                         ),
                       ),
                     ],
@@ -88,7 +88,7 @@ class _UserReportsPageState extends State<UserReportsPage> {
                         style: const TextStyle(
                           fontFamily: 'Afacad',
                           color: Colors.white,
-                          fontSize: 12,
+                          fontSize: 18,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -108,7 +108,8 @@ class _UserReportsPageState extends State<UserReportsPage> {
                   return Center(child: Text('Error: ${snapshot.error}'));
                 }
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator(color: themeColor));
+                  return const Center(
+                      child: CircularProgressIndicator(color: themeColor));
                 }
 
                 final reports = snapshot.data ?? [];
@@ -117,7 +118,10 @@ class _UserReportsPageState extends State<UserReportsPage> {
                   return const Center(
                     child: Text(
                       'No reports yet. Be the first!',
-                      style: TextStyle(fontFamily: 'Afacad',color: Colors.grey, fontSize: 13),
+                      style: TextStyle(
+                          fontFamily: 'Afacad',
+                          color: Colors.grey,
+                          fontSize: 13),
                     ),
                   );
                 }
@@ -165,7 +169,7 @@ class _UserReportsPageState extends State<UserReportsPage> {
                       hintStyle: TextStyle(
                         fontFamily: 'Afacad',
                         color: themeColor.withOpacity(0.5),
-                        fontSize: 13,
+                        fontSize: 18,
                       ),
                       contentPadding: const EdgeInsets.symmetric(
                           horizontal: 15, vertical: 10),

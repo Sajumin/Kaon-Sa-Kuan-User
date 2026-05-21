@@ -17,7 +17,9 @@ class ReportCard extends StatelessWidget {
     String formattedTime;
     DateTime now = DateTime.now();
 
-    if (timestamp.day == now.day && timestamp.month == now.month && timestamp.year == now.year) {
+    if (timestamp.day == now.day &&
+        timestamp.month == now.month &&
+        timestamp.year == now.year) {
       formattedTime = DateFormat('h:mm a').format(timestamp);
     } else {
       formattedTime = DateFormat('MMM d, h:mm a').format(timestamp);
@@ -45,13 +47,12 @@ class ReportCard extends StatelessWidget {
             text,
             style: const TextStyle(
               fontFamily: 'Afacad',
-              fontSize: 13,
+              fontSize: 18,
               color: Colors.black87,
               height: 1.5,
             ),
           ),
         ),
-
         Padding(
           padding: const EdgeInsets.only(left: 8, top: 4),
           child: Text(

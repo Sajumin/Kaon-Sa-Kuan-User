@@ -24,7 +24,6 @@ class _UserHomepageState extends State<UserHomepage> {
   String? _selectedLocationFilter;
   String? _selectedFoodTypeFilter;
 
-
   void _onRestaurantTap(Restaurant restaurant) {
     Navigator.push(
       context,
@@ -115,7 +114,7 @@ class _UserHomepageState extends State<UserHomepage> {
                       style: TextStyle(
                         fontFamily: 'Afacad',
                         color: themeColor,
-                        fontSize: 14,
+                        fontSize: 16,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -129,7 +128,7 @@ class _UserHomepageState extends State<UserHomepage> {
                         },
                       ),
                       ...RestaurantOptions.locations.map(
-                            (location) => _buildFilterChip(
+                        (location) => _buildFilterChip(
                           label: location,
                           isSelected: tempLocationFilter == location,
                           onSelected: () {
@@ -144,7 +143,7 @@ class _UserHomepageState extends State<UserHomepage> {
                       style: TextStyle(
                         fontFamily: 'Afacad',
                         color: themeColor,
-                        fontSize: 14,
+                        fontSize: 16,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -158,7 +157,7 @@ class _UserHomepageState extends State<UserHomepage> {
                         },
                       ),
                       ...RestaurantOptions.foodTypes.map(
-                            (foodType) => _buildFilterChip(
+                        (foodType) => _buildFilterChip(
                           label: foodType,
                           isSelected: tempFoodTypeFilter == foodType,
                           onSelected: () {
@@ -212,10 +211,10 @@ class _UserHomepageState extends State<UserHomepage> {
         children: chips
             .map(
               (chip) => Padding(
-            padding: const EdgeInsets.only(right: 8),
-            child: chip,
-          ),
-        )
+                padding: const EdgeInsets.only(right: 8),
+                child: chip,
+              ),
+            )
             .toList(),
       ),
     );
@@ -258,7 +257,7 @@ class _UserHomepageState extends State<UserHomepage> {
                           style: TextStyle(
                             fontFamily: 'Afacad',
                             color: Colors.white,
-                            fontSize: 22,
+                            fontSize: 25,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
@@ -267,7 +266,7 @@ class _UserHomepageState extends State<UserHomepage> {
                           style: TextStyle(
                             fontFamily: 'Afacad',
                             color: Colors.white,
-                            fontSize: 13,
+                            fontSize: 18,
                           ),
                         ),
                       ],
@@ -317,7 +316,8 @@ class _UserHomepageState extends State<UserHomepage> {
                     ...restaurant.mealTags,
                   ].join(' ').toLowerCase();
 
-                  final matchesSearch = query.isEmpty || searchableText.contains(query);
+                  final matchesSearch =
+                      query.isEmpty || searchableText.contains(query);
 
                   final matchesLocation = _selectedLocationFilter == null ||
                       restaurant.location == _selectedLocationFilter;
@@ -329,7 +329,8 @@ class _UserHomepageState extends State<UserHomepage> {
                   return matchesSearch && matchesLocation && matchesFoodType;
                 }).toList();
 
-                final hasActiveFilter = _selectedLocationFilter != null || _selectedFoodTypeFilter != null;
+                final hasActiveFilter = _selectedLocationFilter != null ||
+                    _selectedFoodTypeFilter != null;
 
                 return Column(
                   children: [
@@ -343,7 +344,8 @@ class _UserHomepageState extends State<UserHomepage> {
                             child: GestureDetector(
                               onTap: _openDecisionMaker,
                               child: const SpeechBubble(
-                                text: "can't decide where to eat? tap me for help!",
+                                text:
+                                    "can't decide where to eat? tap me for help!",
                                 themeColor: themeColor,
                               ),
                             ),
@@ -369,9 +371,10 @@ class _UserHomepageState extends State<UserHomepage> {
                                 hintStyle: TextStyle(
                                   fontFamily: 'Afacad',
                                   color: themeColor.withOpacity(0.7),
-                                  fontSize: 13,
+                                  fontSize: 18,
                                 ),
-                                prefixIcon: const Icon(Icons.search, color: themeColor),
+                                prefixIcon:
+                                    const Icon(Icons.search, color: themeColor),
                                 suffixIcon: Padding(
                                   padding: const EdgeInsets.only(right: 6),
                                   child: SizedBox(
@@ -379,9 +382,13 @@ class _UserHomepageState extends State<UserHomepage> {
                                     height: 40,
                                     child: IconButton(
                                       icon: const Icon(Icons.tune),
-                                      color: hasActiveFilter ? Colors.white : themeColor,
+                                      color: hasActiveFilter
+                                          ? Colors.white
+                                          : themeColor,
                                       style: IconButton.styleFrom(
-                                        backgroundColor: hasActiveFilter ? themeColor : Colors.transparent,
+                                        backgroundColor: hasActiveFilter
+                                            ? themeColor
+                                            : Colors.transparent,
                                         shape: const CircleBorder(),
                                       ),
                                       onPressed: _openFilterSheet,
@@ -392,18 +399,22 @@ class _UserHomepageState extends State<UserHomepage> {
                                   minWidth: 48,
                                   minHeight: 48,
                                 ),
-                                contentPadding: const EdgeInsets.symmetric(vertical: 10),
+                                contentPadding:
+                                    const EdgeInsets.symmetric(vertical: 10),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(30),
-                                  borderSide: const BorderSide(color: themeColor),
+                                  borderSide:
+                                      const BorderSide(color: themeColor),
                                 ),
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(30),
-                                  borderSide: const BorderSide(color: themeColor),
+                                  borderSide:
+                                      const BorderSide(color: themeColor),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(30),
-                                  borderSide: const BorderSide(color: themeColor, width: 2),
+                                  borderSide: const BorderSide(
+                                      color: themeColor, width: 2),
                                 ),
                               ),
                             ),
@@ -414,36 +425,43 @@ class _UserHomepageState extends State<UserHomepage> {
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-                          child: visibleRestaurants.isEmpty
+                        child: visibleRestaurants.isEmpty
                             ? const Center(
-                              child: Text(
-                                'No restaurants found.',
-                                style: TextStyle(fontFamily: 'Afacad',color: Colors.grey),
-                              ),
-                            )
+                                child: Text(
+                                  'No restaurants found.',
+                                  style: TextStyle(
+                                      fontFamily: 'Afacad', color: Colors.grey),
+                                ),
+                              )
                             : LayoutBuilder(
-                              builder: (context, constraints) {
-                                final crossAxisCount = constraints.maxWidth > 600 ? 2 : 1;
+                                builder: (context, constraints) {
+                                  final crossAxisCount =
+                                      constraints.maxWidth > 600 ? 2 : 1;
 
-                                return GridView.builder(
-                                  itemCount: visibleRestaurants.length,
-                                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: crossAxisCount,
-                                    crossAxisSpacing: 16,
-                                    mainAxisSpacing: 16,
-                                    childAspectRatio: crossAxisCount == 2 ? 0.85 : 1.9,
-                                  ),
-                                  itemBuilder: (context, index) {
-                                    final restaurant = visibleRestaurants[index];
+                                  return GridView.builder(
+                                    itemCount: visibleRestaurants.length,
+                                    gridDelegate:
+                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: crossAxisCount,
+                                      crossAxisSpacing: 16,
+                                      mainAxisSpacing: 16,
+                                      //childAspectRatio: crossAxisCount == 2 ? 0.85 : 1.9,
+                                      mainAxisExtent: 200,
+                                    ),
+                                    //itemCount: _restaurants.length,
+                                    itemBuilder: (context, index) {
+                                      final restaurant =
+                                          visibleRestaurants[index];
 
-                                    return RestaurantCard(
-                                      restaurant: restaurant,
-                                      onTap: () => _onRestaurantTap(restaurant),
-                                    );
-                                  },
-                                );
-                              },
-                            ),
+                                      return RestaurantCard(
+                                        restaurant: restaurant,
+                                        onTap: () =>
+                                            _onRestaurantTap(restaurant),
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
                       ),
                     ),
                   ],
@@ -467,7 +485,7 @@ class _UserHomepageState extends State<UserHomepage> {
         style: TextStyle(
           fontFamily: 'Afacad',
           color: isSelected ? Colors.white : themeColor,
-          fontSize: 13,
+          fontSize: 16,
           fontWeight: FontWeight.w600,
         ),
       ),
