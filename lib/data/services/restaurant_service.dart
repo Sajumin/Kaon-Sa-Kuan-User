@@ -14,10 +14,13 @@ class RestaurantService {
 
   Stream<List<Restaurant>> getRestaurants() {
     return _restaurantsCollection
-        .where('status', isEqualTo: 'approved')
-        .where('createdByAdmin', isEqualTo: true)
-        .where('approvedBy', isNotEqualTo: null)
         .where('isStillOperating', isEqualTo: true)
+        .where(
+          Filter.or(
+            Filter('status', isEqualTo: 'approved'),
+            Filter('createdByAdmin', isEqualTo: true)
+          ),
+        )
         .snapshots()
         .map(
           (snapshot) => snapshot.docs
