@@ -77,29 +77,35 @@ class RestaurantDetailPage extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            InfoChip(
-                              icon: Icons.location_on_outlined,
-                              label: restaurant.location,
+                            Expanded(
+                              child: InfoChip(
+                                icon: Icons.location_on_outlined,
+                                label: restaurant.location,
+                              ),
                             ),
-                            const SizedBox(width: 95),
-                            InfoChip(
-                              icon: Icons.payments_outlined,
-                              label: restaurant.priceRange,
+                            Expanded(
+                              child: InfoChip(
+                                icon: Icons.payments_outlined,
+                                label: restaurant.priceRange,
+                              ),
                             ),
                           ],
                         ),
                         const SizedBox(height: 10),
                         Row(
                           children: [
-                            InfoChip(
-                              icon: Icons.access_time_outlined,
-                              label:
-                                  '${formatTime12Hour(restaurant.openTime)} - ${formatTime12Hour(restaurant.closeTime)}',
+                            Expanded(
+                              child: InfoChip(
+                                icon: Icons.access_time_outlined,
+                                label:
+                                    '${formatTime12Hour(restaurant.openTime)} - ${formatTime12Hour(restaurant.closeTime)}',
+                              ),
                             ),
-                            const SizedBox(width: 100),
-                            InfoChip(
-                              icon: Icons.storefront_outlined,
-                              label: restaurant.name,
+                            Expanded(
+                              child: InfoChip(
+                                icon: Icons.storefront_outlined,
+                                label: restaurant.name,
+                              ),
                             ),
                           ],
                         ),
@@ -136,7 +142,7 @@ class RestaurantDetailPage extends StatelessWidget {
                                       fontFamily: 'Afacad',
                                       fontSize: 14,
                                       color: Color.fromARGB(255, 2, 11,
-                                          143), // 👈 ONLY this part is colored
+                                          143),
                                       decoration: TextDecoration.underline,
                                       decorationColor:
                                           Color.fromARGB(255, 2, 11, 143),
@@ -160,7 +166,7 @@ class RestaurantDetailPage extends StatelessWidget {
                           Wrap(
                             spacing: 8,
                             runSpacing: 8,
-                            children: restaurant.tags!
+                            children: restaurant.tags
                                 .map((tag) => TagChip(label: tag))
                                 .toList(),
                           ),
