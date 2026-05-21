@@ -410,7 +410,7 @@ class _UserHomepageState extends State<UserHomepage> {
                           child: visibleRestaurants.isEmpty
                             ? Center(
                               child: Text(
-                                'No matching restaurants found.',
+                                'No restaurants found.',
                                 style: GoogleFonts.poppins(color: Colors.grey),
                               ),
                             )

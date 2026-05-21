@@ -34,16 +34,48 @@ class RestaurantCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Image placeholder
-            Container(
-              height: 110,
-              decoration: const BoxDecoration(
-                color: Color(0xFFFDF0E8),
-                borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-              ),
-              child: Center(
-                child: Icon(Icons.restaurant,
-                    color: themeColor.withOpacity(0.3), size: 48),
+            // Restaurant Image with Placeholder Logic
+            ClipRRect(
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+              child: SizedBox(
+                height: 110,
+                width: double.infinity,
+                child: restaurant.imageUrl.trim().isEmpty
+                  ? Container(
+                    color: const Color(0xFFFDF0E8),
+                    child: Center(
+                      child: Icon(Icons.restaurant,
+                          color: themeColor.withOpacity(0.3), size: 48),
+                    ),
+                  )
+                  : Image.network(
+                    restaurant.imageUrl.trim(),
+                    fit: BoxFit.cover,
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return Container(
+                        color: const Color(0xFFFDF0E8),
+                        child: const Center(
+                          child: SizedBox(
+                            width: 24,
+                            height: 24,
+                            child: CircularProgressIndicator(
+                              valueColor:
+                                  AlwaysStoppedAnimation<Color>(themeColor),
+                              strokeWidth: 2,
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                    errorBuilder: (context, error, stackTrace) => Container(
+                      color: const Color(0xFFFDF0E8),
+                      child: Center(
+                        child: Icon(Icons.broken_image,
+                            color: themeColor.withOpacity(0.3), size: 48),
+                      ),
+                    ),
+                  ),
               ),
             ),
 
